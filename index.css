@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'libre_baskervilleregular';
+    src: url('./assets/librebaskerville-regular-webfont.woff2') format('woff2'),
+    url('./assets/librebaskerville-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: libre_baskervilleregular, serif;
+}
+
+.mapContainer {
+    width: 400px;
+    height: 400px;
+    position: relative;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.center {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    z-index: 99;
+}
