@@ -6,11 +6,20 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'libre_baskervilleitalic';
+    src: url('./assets/librebaskerville-italic-webfont.woff2') format('woff2'),
+    url('./assets/librebaskerville-italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
     font-family: libre_baskervilleregular, serif;
 }
 
-.mapContainer {
+.map-container {
     width: 400px;
     height: 400px;
     position: relative;
@@ -27,4 +36,17 @@ body {
     top: 200px;
     left: 200px;
     z-index: 99;
+}
+
+.-hidden {
+    display: none;
+}
+
+button {
+    font-family: libre_baskervilleitalic;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
 }
