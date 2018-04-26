@@ -6,7 +6,7 @@
 //   lng: -77.03,
 //   lat: 38.9
 // }
-let center = {lat: 40.73630695610136, lng: -73.99124416464475}
+let center = {lat: 40.73630695610136, lng: -73.99124416464475}
 
 const CONFIG = {
   overpassRadius: 100,
@@ -125,7 +125,8 @@ const load = () => {
   const urls = [
     `https://overpass-api.de/api/interpreter?data=${getOverpassQL(center.lat, center.lng, CONFIG.overpassRadius)}`,
     `http://api.openweathermap.org/data/2.5/weather?lat=${center.lat}&lon=${center.lng}&APPID=${window.apiKeys.openWeatherMap}&units=metric`,
-    `http://api.timezonedb.com/v2/get-time-zone?key=${window.apiKeys.timeZoneDB}&format=json&by=position&lat=${center.lat}&lng=${center.lng}` // might be unnecessary as owm has sunrise/sunset
+    `http://api.timezonedb.com/v2/get-time-zone?key=${window.apiKeys.timeZoneDB}&format=json&by=position&lat=${center.lat}&lng=${center.lng}`, // might be unnecessary as owm has sunrise/sunset
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${center.lng},${center.lat}.json?access_token=${window.apiKeys.mapbox}`
   ]
 
   Promise.all(urls.map(url =>
@@ -136,8 +137,12 @@ const load = () => {
     const timezone = jsons[2]
     elements = getElements(rawElements)
     environment = getEnvironment(weather, timezone)
+
+    const address = jsons[3].features[0].text
+    document.querySelector('h1').innerText = address
+
     if (rawElements.length < 10) {
-      fetch(`https://overpass-api.de/api/interpreter?data=${getOverpassQL(center.lat, center.lng, CONFIG.overpassRadiusExtended)}`)
+      fetch(`https://overpass-api.de/api/interpreter?data=${getOverpassQL(center.lat, center.lng, CONFIG.overpassRadiusExt)}`)
         .then(resp => resp.json())
         .then(json => {
           const rawElements = json.elements.filter(e => e.tags !== undefined)

@@ -85,6 +85,10 @@ window.lines = [
     tags: [['amenity', 'bicycle_parking']],
   },
   {
+    template: 'Time for contemplation',
+    tags: [['amenity', 'place_of_worship']],
+  },
+  {
     template: (el, env) => `Meet at ${el.tags['addr:street']}, ${el.tags['addr:housenumber']}.`,
     condition: (el, env) => el.tags['addr:street'] !== undefined && el.tags['addr:housenumber'] !== undefined
   },
