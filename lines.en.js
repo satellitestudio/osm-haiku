@@ -60,7 +60,7 @@ window.lines = [
     tags: [['historic', 'memorial']],
   },
   {
-    template: 'Green. Red. Green. Red.',
+    template: ['Green. Red. Green. Red.', 'Traffic light goes red'],
     tags: [['highway', 'traffic_signals']],
   },
   {
@@ -77,7 +77,7 @@ window.lines = [
     tags: [['leisure', 'park']],
   },
   {
-    template: 'Learn your lesson',
+    template: ['Learn your lesson','The teacher teaches'],
     tags: [['amenity', 'school']],
   },
   {

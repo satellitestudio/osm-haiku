@@ -71,7 +71,11 @@ const lineMatch = (element, line, environment) => {
         (line.condition === undefined || line.condition(element, environment) === true) &&
         (line.needsName === undefined || element.name !== undefined)
       ) {
-        return (typeof line.template === 'function') ? line.template(element, environment) : line.template
+        let template = line.template
+        if (Array.isArray(template)) {
+          template = template[Math.floor(template.length * Math.random())]
+        }
+        return (typeof template === 'function') ? template(element, environment) : template
       }
     }
   }
