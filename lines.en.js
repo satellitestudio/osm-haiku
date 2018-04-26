@@ -4,6 +4,16 @@ window.lines = [
     tags: [['amenity','library']],
   },
   {
+    template: 'Yawns in the classroom',
+    tags: [['amenity','university']],
+    condition: (el, env) => env.moment === 'morning',
+  },
+  {
+    template: 'That couple is getting a loan',
+    tags: [['amenity','bank']],
+    condition: (el, env) => env.moment === 'morning',
+  },
+  {
     template: 'A supermarket hustle and bustle',
     tags: [['shop', 'supermarket']]
   },
@@ -87,6 +97,11 @@ window.lines = [
   {
     template: 'Time for contemplation',
     tags: [['amenity', 'place_of_worship']],
+  },
+  {
+    template: (el, env) => `What would ${el.name} think?`,
+    tags: [['historic', 'memorial']],
+    needsName: true
   },
   {
     template: (el, env) => `Meet at ${el.tags['addr:street']}, ${el.tags['addr:housenumber']}.`,
