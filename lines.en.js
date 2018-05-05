@@ -4,6 +4,20 @@ window.lines = [
     tags: [['amenity','library']],
   },
   {
+    template: 'Yawns in the classroom',
+    tags: [['amenity','university']],
+    condition: (el, env) => env.moment === 'morning',
+  },
+  {
+    template: 'No one sends letters anymore',
+    tags: [['amenity','post_box']]
+  },
+  {
+    template: ['A couple getting a loan', 'A couple getting a mortgage'],
+    tags: [['amenity','bank']],
+    condition: (el, env) => env.moment === 'morning',
+  },
+  {
     template: 'A supermarket hustle and bustle',
     tags: [['shop', 'supermarket']]
   },
@@ -37,9 +51,14 @@ window.lines = [
     tags: [['recycling:glass', 'true']],
   },
   {
-    template: 'Going back home from commuting',
+    template: 'Commuting back home',
     tags: [['subway', 'yes']],
     condition: (el, env) => env.moment === 'afternoon' || env.moment === 'evening'
+  },
+  {
+    template: 'Someone has cut in line at the theater',
+    tags: [['amenity', 'theatre']],
+    condition: (el, env) => env.moment === 'evening'
   },
   {
     template: 'Going to work',
@@ -47,7 +66,22 @@ window.lines = [
     condition: (el, env) => env.moment === 'morning'
   },
   {
-    template: 'That building skyscraping',
+    template: 'Is it too early for a burger?',
+    tags: [['cuisine', 'burger']],
+    condition: (el, env) => env.moment === 'morning'
+  },
+  {
+    template: 'The turists are already sleeping',
+    tags: [['tourism', 'hotel']],
+    condition: (el, env) => env.moment === 'evening'
+  },
+  {
+    template: 'Hotels',
+    tags: [['amenity', 'place_of_worship']],
+    condition: (el, env) => new Date().getDay() >= 6 && env.moment === 'morning'
+  },
+  {
+    template: 'The skyscraper towers above the city',
     tags: [['ele', '*']],
     condition: (el, env) => parseInt(el.tags.ele) >= 12
   },
@@ -73,6 +107,10 @@ window.lines = [
     tags: [['subway', 'route']],
   },
   {
+    template: 'A bus pass by',
+    tags: [['route', 'bus']],
+  },
+  {
     template: 'The grass is green',
     tags: [['leisure', 'park']],
   },
@@ -87,6 +125,11 @@ window.lines = [
   {
     template: 'Time for contemplation',
     tags: [['amenity', 'place_of_worship']],
+  },
+  {
+    template: (el, env) => `What would ${el.name} think?`,
+    tags: [['historic', 'memorial']],
+    needsName: true
   },
   {
     template: (el, env) => `Meet at ${el.tags['addr:street']}, ${el.tags['addr:housenumber']}.`,
