@@ -124,7 +124,10 @@ const writePoem = () => {
 let elements
 let environment
 
+
 const load = () => {
+  document.querySelector('.js-poem').innerHTML = 'Making a haiku...'
+  document.querySelector('h1').innerText = '...'
   const urls = [
     `https://overpass-api.de/api/interpreter?data=${getOverpassQL(center.lat, center.lng, CONFIG.overpassRadius)}`,
     `http://api.openweathermap.org/data/2.5/weather?lat=${center.lat}&lon=${center.lng}&APPID=${window.apiKeys.openWeatherMap}&units=metric`,
@@ -164,18 +167,24 @@ const setCenter = () => {
   load()
 }
 
-const toggle = (showMap) => {
-  document.querySelector('.js-poem-container').classList.toggle('-hidden', showMap)
-  document.querySelector('.controls').classList.toggle('-hidden', !showMap)
-  document.querySelector('.js-map-write').classList.toggle('-hidden', !showMap)
-  map.invalidateSize(false)
-}
+let startLoadTimeout
 
-document.querySelector('.js-write').addEventListener('click', writePoem)
-document.querySelector('.js-show-map').addEventListener('click', () => toggle(true))
-document.querySelector('.js-map-write').addEventListener('click', () => {
-  setCenter()
-  toggle(false)
+map.on('movestart', () => {
+  document.querySelector('.js-poem-container').classList.toggle('-hidden', true)
 })
 
+map.on('moveend', () => {
+  startLoadTimeout = setTimeout(() => {
+    document.querySelector('.js-poem-container').classList.toggle('-hidden', false)
+    setCenter()
+  }, 1500)
+})
+
+map.on('move', () => {
+  clearTimeout(startLoadTimeout)
+})
+
+document.querySelector('h1').addEventListener('click', writePoem)
+
 load()
+
