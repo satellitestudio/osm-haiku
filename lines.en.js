@@ -13,6 +13,10 @@ window.lines = [
     tags: [['amenity','post_box']]
   },
   {
+    template: 'The boat arrives late again',
+    tags: [['route','ferry']]
+  },
+  {
     template: ['A couple getting a loan', 'A couple getting a mortgage'],
     tags: [['amenity','bank']],
     condition: (el, env) => env.moment === 'morning',
@@ -66,8 +70,8 @@ window.lines = [
     condition: (el, env) => env.moment === 'morning'
   },
   {
-    template: 'Is it too early for a burger?',
-    tags: [['cuisine', 'burger']],
+    template: 'Is it too early for a beer?',
+    tags: [['amenity', 'pub']],
     condition: (el, env) => env.moment === 'morning'
   },
   {
@@ -107,7 +111,7 @@ window.lines = [
     tags: [['subway', 'route']],
   },
   {
-    template: 'A bus pass by',
+    template: 'Buses passing through',
     tags: [['route', 'bus']],
   },
   {

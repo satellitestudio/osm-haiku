@@ -15,14 +15,28 @@
 
 }
 
-body {
-    font-family: libre_baskervilleregular, serif;
+@import url('https://fonts.googleapis.com/css?family=Cardo|Open+Sans:400,400i');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+    font-family: 'Cardo', serif;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 .map-container {
-    width: 400px;
-    height: 400px;
-    position: relative;
+    z-index: -1;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #map {
@@ -33,9 +47,10 @@ body {
 
 .center {
     position: absolute;
-    top: 200px;
-    left: 200px;
+    top: 50vh;
+    left: 50vw;
     z-index: 99;
+    font-size: 2rem;
 }
 
 .-hidden {
@@ -43,10 +58,49 @@ body {
 }
 
 button {
-    font-family: libre_baskervilleitalic;
+    font-family: 'Open Sans', sans-serif;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
     text-decoration: underline;
+    font-size: 1.4rem;
+}
+
+.js-poem {
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-70%);
+    left: 5rem;
+    font-size: 4vw;
+    line-height: 5.5vw;
+    pointer-events: none;
+}
+
+h1 {
+    display: block;
+    position: absolute;
+    left: 5rem;
+    top: 3rem;
+    font-size: 1.4rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    opacity: .5;
+
+}
+
+.controls, .js-map-write {
+    position: absolute;
+    left: 5rem;
+    bottom: 3rem;
+}
+
+.leaflet-control-attribution {
+    opacity: .5;
+}
+.leaflet-container a{
+    color: black !important;
 }
