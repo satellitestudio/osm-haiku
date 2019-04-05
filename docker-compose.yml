@@ -1,0 +1,42 @@
+version: '3'
+services:
+  # api:
+  #   image: wiktorn/overpass-api:latest
+  #   container_name: overpass-api
+  #   restart: always
+  #   ports:
+  #     - '12345:80'
+  #   environment:
+  #     - OVERPASS_META=yes
+  #     - OVERPASS_MODE=init
+  #     - OVERPASS_PLANET_URL=http://download.geofabrik.de/europe/spain-latest.osm.bz2
+  #     - OVERPASS_DIFF_URL=http://download.openstreetmap.fr/replication/europe/spain/minute/
+  #     - OVERPASS_PLANET_SEQUENCE_ID=3370000
+  #   volumes:
+  #     - /Users/joseangel/Workspace/docker/overpass_db/:/db
+  #   stdin_open: true
+  #   tty: true
+  overpass:
+    image: wiktorn/overpass-api:0.7.55
+    container_name: overpass-api
+    restart: always
+    environment:
+      OVERPASS_PLANET_URL: file:///planet/planet.osm.bz2
+    volumes:
+      - ./overpass/db:/db
+      - ./overpass/planet.osm.bz2:/planet/planet.osm.bz2
+      - ./overpass/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+      - ./overpass/docker-entrypoint.sh:/app/docker-entrypoint.sh
+    ports:
+      - '8085:80'
+    stdin_open: true
+    tty: true
+  web:
+    image: nginx:stable-alpine
+    container_name: osm-haiku-nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./app:/usr/share/nginx/html/
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    restart: always

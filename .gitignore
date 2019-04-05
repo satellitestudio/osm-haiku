@@ -1,3 +1,6 @@
-apiKeys.js
+app/apiKeys.js
 node_modules
 .DS_Store
+
+overpass/db
+overpass/planet.osm.bz2

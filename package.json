@@ -6,7 +6,7 @@
   "scripts": {
     "test": "eslint -c .eslintrc.js **/*.js",
     "livereload": "live-reload --port 9091 .",
-    "serve": "http-server -s -p 9094 .",
+    "serve": "http-server app -s -p 9094 .",
     "start": "npm run livereload -s & npm run serve"
   },
   "author": "",
