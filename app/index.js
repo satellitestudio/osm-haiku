@@ -6,7 +6,7 @@
 //   lng: -77.03,
 //   lat: 38.9
 // }
-let center = { lat: 40.43022363450862, lng: -3.69140625 }
+let center = { lat: 40.71707851579789, lng: -73.9324951171875 }
 
 const CONFIG = {
   overpassRadius: 100,
@@ -15,10 +15,10 @@ const CONFIG = {
 
 const mapConfig = {
   zoomControl: false,
-  minZoom: 5,
+  minZoom: 10,
   maxBounds: [
-    [44.762336674810996, -10.5029296875],
-    [35.22767235493586, 2.26318359375]
+    [41.1455697310095, -74.42138671875],
+    [40.22921818870117, -73.4490966796875]
   ],
   maxBoundsViscosity: 1.0
 }
