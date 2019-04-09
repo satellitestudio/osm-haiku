@@ -62,13 +62,24 @@ const getEnvironment = (weather, timezone) => {
   const timeHour = parseInt(timezone.formatted.match(/(\d\d):/)[1])
   let moment
   if (timeHour > 0 && timeHour < 6) moment = 'night'
-  if (timeHour > 6 && timeHour < 13) moment = 'morning'
-  if (timeHour > 13 && timeHour < 19) moment = 'afternoon'
-  if (timeHour > 19) moment = 'evening'
+  if (timeHour >= 6 && timeHour < 13) moment = 'morning'
+  if (timeHour >= 13 && timeHour < 19) moment = 'afternoon'
+  if (timeHour >= 19) moment = 'evening'
+
+  const weatherConditions = {}
+  weatherConditions.thunderstorm = weather.weather.find(w => w.id >= 200 && w.id < 300) !== undefined
+  weatherConditions.drizzle      = weather.weather.find(w => w.id >= 300 && w.id < 400) !== undefined
+  weatherConditions.rain         = weather.weather.find(w => w.id >= 500 && w.id < 600) !== undefined
+  weatherConditions.snow         = weather.weather.find(w => w.id >= 600 && w.id < 700) !== undefined
+  weatherConditions.clear        = weather.weather.find(w => w.id === 800) !== undefined
+  weatherConditions.cloudy       = weather.weather.find(w => w.id >= 801 && w.id < 900) !== undefined
+  weatherConditions._all = weather.weather.map(w => w.main)
+
   return {
     timeHour,
     moment,
-    temperature: weather.main.temp
+    temperature: weather.main.temp,
+    weatherConditions
   }
 }
 
@@ -110,6 +121,7 @@ const writePoem = () => {
   const numElements = elementsCopy.length
   const matches = []
 
+  // all features
   for (let i = 0; i <= numElements - 1; i++) {
     const randomIndex = Math.floor(elementsCopy.length * Math.random())
     const randomElement = elementsCopy[randomIndex]
@@ -126,17 +138,22 @@ const writePoem = () => {
         }
       }
     })
-
-    // dedup ?
-
+    elementsCopy.splice(randomIndex, 1)
     if (matches.length >= 3) {
       break
     }
-
-    elementsCopy.splice(randomIndex, 1)
   }
-  // console.log(matches)
-  document.querySelector('.js-poem').innerHTML = matches
+  // console.log(matches.map(m => m.template));
+
+  const finalMatches = []
+
+  for (let j = 0; j < 3; j++) {
+    const randomIndex = Math.floor(matches.length * Math.random())
+    finalMatches.push(matches[randomIndex])
+    matches.splice(randomIndex, 1)
+  }
+
+  document.querySelector('.js-poem').innerHTML = finalMatches
     .map((m) => m.template)
     .join('<br>')
 }
@@ -170,6 +187,7 @@ const load = () => {
       const weather = jsons[1]
       const timezone = jsons[2]
       elements = getElements(rawElements)
+      console.log(elements)
       environment = getEnvironment(weather, timezone)
 
       const address = jsons[3].features[0].text
@@ -216,7 +234,7 @@ map.on('moveend', () => {
       .querySelector('.js-poem-container')
       .classList.toggle('-hidden', false)
     setCenter()
-  }, 1500)
+  }, 800)
 })
 
 map.on('move', () => {

@@ -41,12 +41,12 @@ html, body {
     top: 50vh;
     left: 50vw;
     z-index: 99;
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 .overlay {
     background-color: white;
-    opacity: .4;
+    opacity: .6;
     position: absolute;
     width: 100vw;
     height: 100vh;
@@ -71,7 +71,7 @@ h1 {
     position: absolute;
     left: 5rem;
     top: 3rem;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-style: italic;
