@@ -5,19 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint -c .eslintrc.js **/*.js",
-    "livereload": "live-reload --port 9091 .",
-    "serve": "http-server app -s -p 9094 .",
-    "start": "npm run livereload -s & npm run serve"
+    "start": "live-server --port=9094 ./app"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "http-server": "^0.11.1",
-    "live-reload": "^1.1.0"
-  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-es6": "^1.10.3",
-    "eslint-plugin-import": "^2.11.0"
+    "eslint-plugin-import": "^2.11.0",
+    "live-server": "^1.2.1"
   }
 }
