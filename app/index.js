@@ -6,7 +6,7 @@
 //   lng: -77.03,
 //   lat: 38.9
 // }
-let center = { lat: 40.71707851579789, lng: -73.9324951171875 }
+let center = window.config.center
 
 const CONFIG = {
   overpassRadius: 100,
@@ -15,18 +15,17 @@ const CONFIG = {
 
 const mapConfig = {
   zoomControl: false,
-  minZoom: 10,
-  maxBounds: [
-    [41.1455697310095, -74.42138671875],
-    [40.22921818870117, -73.4490966796875]
-  ],
-  maxBoundsViscosity: 1.0
+  minZoom: 10
+}
+if (window.config.maxBounds !== null && window.config.maxBounds !== undefined) {
+  mapConfig.maxBounds = window.config.maxBounds
+  mapConfig.maxBoundsViscosity = 1.0
 }
 
 const map = L.map('map', mapConfig).setView(center, 14)
 
 L.tileLayer(
-  'https://api.mapbox.com/styles/v1/nerik/cjggtikms001p2ro6qfw9uucs/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmVyaWsiLCJhIjoidGk4anFNWSJ9.DtXdac0Q_4kb4hWcGItNPA',
+  `https://api.mapbox.com/styles/v1/nerik/cjggtikms001p2ro6qfw9uucs/tiles/256/{z}/{x}/{y}?access_token=${window.config.mapbox}`,
   {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -149,20 +148,20 @@ const load = () => {
   document.querySelector('.js-poem').innerHTML = 'Making a haiku...'
   document.querySelector('h1').innerText = '...'
   const urls = [
-    `http://localhost:8085/api/interpreter?data=${getOverpassQL(
+    `${window.config.overpass}?data=${getOverpassQL(
       center.lat,
       center.lng,
       CONFIG.overpassRadius
     )}`,
     `http://api.openweathermap.org/data/2.5/weather?lat=${center.lat}&lon=${
       center.lng
-    }&APPID=${window.apiKeys.openWeatherMap}&units=metric`,
+    }&APPID=${window.config.openWeatherMap}&units=metric`,
     `http://api.timezonedb.com/v2/get-time-zone?key=${
-      window.apiKeys.timeZoneDB
+      window.config.timeZoneDB
     }&format=json&by=position&lat=${center.lat}&lng=${center.lng}`, // might be unnecessary as owm has sunrise/sunset
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${center.lng},${
       center.lat
-    }.json?access_token=${window.apiKeys.mapbox}`
+    }.json?access_token=${window.config.mapbox}`
   ]
 
   Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then(
@@ -178,7 +177,7 @@ const load = () => {
 
       if (rawElements.length < 10) {
         fetch(
-          `http://localhost:8085/api/interpreter?data=${getOverpassQL(
+          `${window.config.overpass}?data=${getOverpassQL(
             center.lat,
             center.lng,
             CONFIG.overpassRadiusExt

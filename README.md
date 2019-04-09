@@ -3,7 +3,7 @@
 ## Run locally
 
 - Run `npm i`
-- Create an `apiKeys.js` file
+- Create an `app/config.js` file (`cp app/config-sample.js app/config.js`) and add tokens
 - Run `npm start` and go to http://localhost:9094/
  
 ## Line rules

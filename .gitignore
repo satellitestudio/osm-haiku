@@ -1,4 +1,4 @@
-app/apiKeys.js
+app/config.js
 node_modules
 .DS_Store
 
