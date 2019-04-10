@@ -39,7 +39,7 @@ window.lines = [
     tags: [['amenity','post_box']]
   },
   {
-    template: 'The boat arrives late again',
+    template: 'The ferry arrives late again',
     tags: [['route','ferry']]
   },
   {
@@ -60,6 +60,10 @@ window.lines = [
     tags: [['shop', 'bakery']]
   },
   {
+    template: ['Short around the ears?', 'Snip snip snip'],
+    tags: [['shop', 'hairdresser']]
+  },
+  {
     template: 'Never look backwards or you\'ll fall down the stairs.',
     tags: [['highway', 'steps']]
   },
@@ -75,6 +79,22 @@ window.lines = [
     needsName: true
   },
   {
+    template: ['You are what you eat', 'Coming hot'],
+    tags: [['amenity', 'restaurant']]
+  },
+  {
+    template: ['I need a coffee', 'Coffee smells good'],
+    tags: [['amenity', 'cafe']]
+  },
+  {
+    template: 'A jalapeño in my tongue',
+    tags: [['cuisine::mexican', '*']]
+  },
+  {
+    template: ['A lonely shoe there','These boots are made for walking'],
+    tags: [['shop','shoes']]
+  },
+  {
     template: 'Heat on the pavement stones',
     tags: [['surface', 'paving_stones']],
     condition: (el, env) => env.temperature > 20
@@ -84,7 +104,7 @@ window.lines = [
     tags: [['amenity', 'fast_food']]
   },
   {
-    template: 'Being drunk on a bench',
+    template: 'A poor soul on a bench',
     tags: [['amenity', 'bench']],
     condition: (el, env) => env.moment === 'night'
   },
@@ -94,8 +114,11 @@ window.lines = [
   },
   {
     template: 'Commuting back home',
-    tags: [['subway', 'yes'], ['railway', 'subway_entrance']],
-    condition: (el, env) => env.moment === 'afternoon' || env.moment === 'evening'
+    tags: [['subway', 'yes'], ['railway', 'subway_entrance']]
+  },
+  {
+    template: ['Should we take the metro?', 'Do you feel warm air from the subway entrance?'],
+    tags: [['railway', 'subway_entrance']]
   },
   {
     template: 'Going to work',
@@ -118,17 +141,17 @@ window.lines = [
     condition: (el, env) => env.moment === 'evening'
   },
   {
-    template: 'Hotels',
+    template: 'Praise him',
     tags: [['amenity', 'place_of_worship']],
     condition: (el, env) => new Date().getDay() >= 6 && env.moment === 'morning'
   },
   {
-    template: 'The skyscraper towers above the city',
+    template: 'A skyscraper towers above the city',
     tags: [['ele', '*']],
-    condition: (el, env) => parseInt(el.tags.ele) >= 12
+    condition: (el, env) => parseInt(el.tags.ele) >= 15
   },
   {
-    template: 'Walking on the zebra',
+    template: ['Walking on the zebra', 'White paint on concrete'],
     tags: [['footway', 'crossing']],
   },
   {
@@ -153,21 +176,30 @@ window.lines = [
     tags: [['subway', 'route']],
   },
   {
-    template: 'Buses passing through',
+    template: ['Buses passing through', 'The bus honking'],
     tags: [['route', 'bus']],
   },
   {
-    template: 'The grass is green',
-    tags: [['leisure', 'park']],
+    template: (el) => `A bus will soon arrive at ${el.name}`,
+    tags: [['highway', 'bus_stop']],
+    needsName: true,
   },
   {
-    template: 'A walk in the park',
+    template: ['The grass is green', 'A walk in the park'],
     tags: [['leisure', 'park']],
   },
   {
     template: 'Late night stroll',
     tags: [['leisure', 'park']],
     condition: (el, env) => env.moment === 'night',
+  },
+  {
+    template: 'High up in the trees',
+    tags: [['natural', 'wood']],
+  },
+  {
+    template: ['Rest in peace', 'Forever remember', 'A great sadness'],
+    tags: [['landuse', 'cemetery']]
   },
   {
     template: ['Learn your lesson','The teacher teaches'],
@@ -178,8 +210,24 @@ window.lines = [
     tags: [['amenity', 'bicycle_parking']],
   },
   {
+    template: ['On two wheels', 'Speeding on a bike'],
+    tags: [['cycleway:right', '*']],
+  },
+  {
     template: 'Time for contemplation',
     tags: [['amenity', 'place_of_worship']],
+  },
+  {
+    template: ['Blue pill/red pill', 'Watching you with the lab coat', 'Take your medication'],
+    tags: [['amenity', 'pharmacy']],
+  },
+  {
+    template: ['Will someone answer the phone?', 'Insert more coins'],
+    tags: [['amenity', 'telephone']],
+  },
+  {
+    template: ['Smells of chlorine', 'Running is forbidden', 'Water\'s warm once you\'re inside', 'Speedos and swimming glasses'],
+    tags: [['leisure', 'swimming_pool']],
   },
   {
     template: 'Water under pressure',
@@ -189,6 +237,14 @@ window.lines = [
     template: (el, env) => `What would ${el.name} think?`,
     tags: [['historic', 'memorial']],
     needsName: true
+  },
+  {
+    template: 'A sculpture so elegantly made',
+    tags: [['artwork_type','sculpture']]
+  },
+  {
+    template: (el) => el.name,
+    tags: [['tourism','artwork']]
   },
   {
     template: (el, env) => `Meet at ${el.tags['addr:street']}, ${el.tags['addr:housenumber']}.`,

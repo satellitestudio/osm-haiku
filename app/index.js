@@ -86,7 +86,8 @@ const getEnvironment = (weather, timezone) => {
   }
 }
 
-const lineMatch = (element, line, environment) => {
+const lineMatching = (element, line, environment) => {
+  // allow all 
   const tags = line.tags === undefined ? [['*', '*']] : line.tags
 
   for (let i = 0; i < tags.length; i++) {
@@ -103,12 +104,7 @@ const lineMatch = (element, line, environment) => {
         (line.needsName === undefined || element.name !== undefined)
       ) {
         let template = line.template
-        if (Array.isArray(template)) {
-          template = template[Math.floor(template.length * Math.random())]
-        }
-        return typeof template === 'function'
-          ? template(element, environment)
-          : template
+        return template
       }
     }
   }
@@ -119,45 +115,77 @@ const writePoem = () => {
 
   const lines = window.lines
 
-  // console.log(elements, environment, elements.length)
-  const elementsCopy = [].concat(elements)
-  const numElements = elementsCopy.length
-  const matches = []
+  const featuresCopy = [].concat(elements)
+  const numFeatures = featuresCopy.length
+  const lineMatches = []
 
   // all features
-  for (let i = 0; i <= numElements - 1; i++) {
-    const randomIndex = Math.floor(elementsCopy.length * Math.random())
-    const randomElement = elementsCopy[randomIndex]
-
-    lines.forEach((line, i) => {
-      const lineAlreadyUsed = matches.find((m) => m.index === i) !== undefined
-      if (lineAlreadyUsed === false) {
-        const lm = lineMatch(randomElement, line, environment)
-        if (lm !== undefined) {
-          matches.push({
-            template: lm,
-            index: i
-          })
-        }
+  for (let i = 0; i <= numFeatures - 1; i++) {
+    const feature = featuresCopy[i]
+    // take all existing lines
+    lines.forEach((line, lineIndex) => {
+      const template = lineMatching(feature, line, environment)
+      if (template !== undefined) {
+        lineMatches.push({
+          feature,
+          template,
+          lineIndex
+        })
       }
     })
-    elementsCopy.splice(randomIndex, 1)
-    if (matches.length >= 3) {
-      break
+  }
+
+  // deduplicate line matches
+  const uniqLineMatches = []
+  const uniqLineMatchesIndexes = []
+  lineMatches.forEach(l => {
+    if (!uniqLineMatchesIndexes.includes(l.lineIndex)) {
+      // TODO transpile !!
+      const newLine = {...l}
+      if (Array.isArray(newLine.template)) {
+        newLine.template = [...newLine.template]
+      }
+      uniqLineMatches.push(l)
+      uniqLineMatchesIndexes.push(l.lineIndex)
+    }
+  })
+
+  // no prioritizing: result will only depend on lines files:
+  // - if there are more env rules, better chance to have env lines
+  // - a rule with possibilities (template is an array) will have as
+  // much 'weight' as its array length
+  const numLines = 3
+  const finalLines = []
+
+  for (let j = 0; j < numLines; j++) {
+    const randomIndex = Math.floor(uniqLineMatches.length * Math.random())
+    let template = uniqLineMatches[randomIndex].template
+    // will remove line from the stack by default, except when variations are set (template is an array)
+    let removeLine = true
+    // when template is an array, use a random phrase until the template emptied of all its phrases
+    if (Array.isArray(template)) {
+      const randomTemplateIndex = Math.floor(template.length * Math.random())
+      template = template[randomTemplateIndex]
+      uniqLineMatches[randomIndex].template.splice(randomTemplateIndex, 1)
+      // keep line as there are still available templates in the array
+      if (uniqLineMatches[randomIndex].template.length) {
+        removeLine = false
+      }
+    }
+
+    // if template is a function, execute it with matched feature and env as params
+    template = (typeof template === 'function')
+      ? template(uniqLineMatches[randomIndex].feature, environment)
+      : template
+    
+    finalLines.push(template)
+    if (removeLine === true) {
+      uniqLineMatches.splice(randomIndex, 1)
     }
   }
-  // console.log(matches.map(m => m.template));
-
-  const finalMatches = []
-
-  for (let j = 0; j < 3; j++) {
-    const randomIndex = Math.floor(matches.length * Math.random())
-    finalMatches.push(matches[randomIndex])
-    matches.splice(randomIndex, 1)
-  }
-
-  document.querySelector('.js-poem').innerHTML = finalMatches
-    .map((m) => m.template)
+  
+  console.log(finalLines, uniqLineMatches)
+  document.querySelector('.js-poem').innerHTML = finalLines
     .join('<br>')
 }
 
@@ -183,11 +211,18 @@ const load = () => {
       const rawElements = jsons[0].elements.filter((e) => e.tags !== undefined)
       const weather = jsons[1]
       const timezone = jsons[2]
+      const geocoder = jsons[3]
       elements = getElements(rawElements)
-      console.log(elements)
+
+      const featuresDebug = elements.map(feature => {
+        return Object.keys(feature.tags).map(tag => {
+          return `${tag},${feature.tags[tag]}`
+        })
+      })
+      console.log(featuresDebug)
       environment = getEnvironment(weather, timezone)
 
-      const address = jsons[3].features[0].text
+      const address = geocoder.features[0].place_name
       document.querySelector('h1').innerText = address
 
       if (rawElements.length < 10) {
