@@ -22,15 +22,18 @@ if (window.config.maxBounds !== null && window.config.maxBounds !== undefined) {
   mapConfig.maxBoundsViscosity = 1.0
 }
 
-const map = L.map('map', mapConfig).setView(center, 14)
-
-L.tileLayer(
-  `https://api.mapbox.com/styles/v1/nerik/cjggtikms001p2ro6qfw9uucs/tiles/256/{z}/{x}/{y}?access_token=${window.config.mapbox}`,
-  {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }
-).addTo(map)
+let map
+if (window.L) {
+  map = L.map('map', mapConfig).setView(center, 14)
+  
+  L.tileLayer(
+    `${window.config.tiles.url}?access_token=${window.config.tiles.token}`,
+    {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }
+  ).addTo(map)
+}
 
 const getOverpassQL = (lat, lng, radius) => {
   return encodeURIComponent(`[out:json][timeout:25];(
@@ -165,20 +168,14 @@ const load = () => {
   document.querySelector('.js-poem').innerHTML = 'Making a haiku...'
   document.querySelector('h1').innerText = '...'
   const urls = [
-    `${window.config.overpass}?data=${getOverpassQL(
+    `${window.config.overpass.url}?data=${getOverpassQL(
       center.lat,
       center.lng,
       CONFIG.overpassRadius
     )}`,
-    `http://api.openweathermap.org/data/2.5/weather?lat=${center.lat}&lon=${
-      center.lng
-    }&APPID=${window.config.openWeatherMap}&units=metric`,
-    `http://api.timezonedb.com/v2/get-time-zone?key=${
-      window.config.timeZoneDB
-    }&format=json&by=position&lat=${center.lat}&lng=${center.lng}`, // might be unnecessary as owm has sunrise/sunset
-    `https://api.mapbox.com/geocoding/v5/mapbox.places/${center.lng},${
-      center.lat
-    }.json?access_token=${window.config.mapbox}`
+    `${window.config.openWeatherMap.url}?lat=${center.lat}&lon=${center.lng}&APPID=${window.config.openWeatherMap.token}&units=metric`,
+    `${window.config.timeZoneDB.url}?key=${window.config.timeZoneDB.token}&format=json&by=position&lat=${center.lat}&lng=${center.lng}`, // might be unnecessary as owm has sunrise/sunset
+    (window.config.geocoder.token) ? `${window.config.geocoder.url}/${center.lng},${center.lat}.json?access_token=${window.config.geocoder.token}` : window.config.geocoder.url
   ]
 
   Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then(
@@ -195,7 +192,7 @@ const load = () => {
 
       if (rawElements.length < 10) {
         fetch(
-          `${window.config.overpass}?data=${getOverpassQL(
+          `${window.config.overpass.url}?data=${getOverpassQL(
             center.lat,
             center.lng,
             CONFIG.overpassRadiusExt
@@ -224,22 +221,24 @@ const setCenter = () => {
 
 let startLoadTimeout
 
-map.on('movestart', () => {
-  document.querySelector('.js-poem-container').classList.toggle('-hidden', true)
-})
-
-map.on('moveend', () => {
-  startLoadTimeout = setTimeout(() => {
-    document
-      .querySelector('.js-poem-container')
-      .classList.toggle('-hidden', false)
-    setCenter()
-  }, 800)
-})
-
-map.on('move', () => {
-  clearTimeout(startLoadTimeout)
-})
+if (map) {
+  map.on('movestart', () => {
+    document.querySelector('.js-poem-container').classList.toggle('-hidden', true)
+  })
+  
+  map.on('moveend', () => {
+    startLoadTimeout = setTimeout(() => {
+      document
+        .querySelector('.js-poem-container')
+        .classList.toggle('-hidden', false)
+      setCenter()
+    }, 800)
+  })
+  
+  map.on('move', () => {
+    clearTimeout(startLoadTimeout)
+  })
+}
 
 document.querySelector('h1').addEventListener('click', writePoem)
 
