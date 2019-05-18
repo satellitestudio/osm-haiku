@@ -25,6 +25,8 @@ if (window.config.maxBounds !== null && window.config.maxBounds !== undefined) {
 let map
 if (window.L) {
   map = L.map('map', mapConfig).setView(center, 14)
+
+  var hash = new L.Hash(map);
   
   L.tileLayer(
     `${window.config.tiles.url}?access_token=${window.config.tiles.token}`,
@@ -112,7 +114,7 @@ const lineMatching = (element, line, environment) => {
 
 const writePoem = () => {
   // console.log(rawElements, weather, timezone)
-
+  
   const lines = window.lines
 
   const featuresCopy = [].concat(elements)
