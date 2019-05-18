@@ -63,9 +63,11 @@ html, body {
     left: 5rem;
     font-size: 4vw;
     line-height: 5.5vw;
-    pointer-events: none;
 }
 
+.poem.-disabled {
+    pointer-events: none;
+}
 
 h1 {
     display: block;
@@ -87,7 +89,7 @@ h1 {
                                   supported by Chrome and Opera */
 }
 
-h1:hover {
+h1:hover, .poem:hover {
     text-decoration: underline;
 }
 

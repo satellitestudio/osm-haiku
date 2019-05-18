@@ -184,6 +184,7 @@ let environment
 
 const load = () => {
   document.querySelector('.js-poem').innerHTML = 'Making a haiku...'
+  document.querySelector('.js-poem').classList.toggle('-disabled', true)
   document.querySelector('h1').innerText = '...'
   const urls = [
     `${window.config.overpass.url}?data=${getOverpassQL(
@@ -230,10 +231,12 @@ const load = () => {
             )
             elements = getElements(rawElements)
             writePoem()
+            document.querySelector('.js-poem').classList.toggle('-disabled', false)
             // console.log(rawElements.map(e => e.tags))
           })
       } else {
         writePoem()
+        document.querySelector('.js-poem').classList.toggle('-disabled', false)
       }
     }
   )
@@ -255,7 +258,7 @@ const intro = () => {
       lat: center.lat + .01
     }, {
       animate: true,
-      duration: 2
+      duration: .2
     } )
 
     map.on('movestart', () => {
@@ -273,6 +276,9 @@ const intro = () => {
     map.on('move', () => {
       clearTimeout(startLoadTimeout)
     })
+
+    document.querySelector('h1').addEventListener('click', writePoem)
+    document.querySelector('.js-poem').addEventListener('click', writePoem)
   }, 100)
   
 }
@@ -291,9 +297,6 @@ if (window.L) {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }
   ).addTo(map)
-
-  // TODOD
-  document.querySelector('h1').addEventListener('click', writePoem)
 
   intro()
 }
