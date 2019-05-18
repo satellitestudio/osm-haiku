@@ -6,6 +6,18 @@
 //   lng: -77.03,
 //   lat: 38.9
 // }
+const shuffle = (a) => {
+  var j, x, i
+  for (i = a.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1))
+    x = a[i]
+    a[i] = a[j]
+    a[j] = x
+  }
+  return a
+}
+
+
 let center = window.config.center
 let map
 let startLoadTimeout
@@ -13,12 +25,13 @@ let startLoadTimeout
 
 const CONFIG = {
   overpassRadius: 100,
-  overpassRadiusExt: 1000
+  overpassRadiusExt: 400,
+  minRawElements: 20
 }
 
 const mapConfig = {
   zoomControl: false,
-  minZoom: 10
+  minZoom: 3
 }
 if (window.config.maxBounds !== null && window.config.maxBounds !== undefined) {
   mapConfig.maxBounds = window.config.maxBounds
@@ -26,11 +39,18 @@ if (window.config.maxBounds !== null && window.config.maxBounds !== undefined) {
 }
 
 const getOverpassQL = (lat, lng, radius) => {
-  return encodeURIComponent(`[out:json][timeout:25];(
-    node(around:${radius},${lat},${lng});
-    way(around:${radius},${lat},${lng});
-    relation(around:${radius},${lat},${lng});
-    <;);out center;>;out skel qt;`)
+  const ql = `[out:json][timeout:25];
+  (
+    nwr[~"."~"."](around:${radius},${lat},${lng});
+  <;);out tags center;
+  (
+    way[~"landuse|landcover|natural"~"."](around:${radius * 4},${lat},${lng});
+  );out tags center;
+  is_in(${lat},${lng})->.a;
+  relation(pivot.a);
+  out tags center;`
+  console.log(ql)
+  return encodeURIComponent(ql)
 }
 
 const getElements = (rawElements) => {
@@ -52,13 +72,16 @@ const getElements = (rawElements) => {
 }
 
 const getEnvironment = (weather, timezone) => {
+  if (timezone.status === 'FAILED') {
+    return
+  }
   const timeHour = parseInt(timezone.formatted.match(/(\d\d):/)[1])
   let moment
   if (timeHour > 0 && timeHour < 6) moment = 'night'
   if (timeHour >= 6 && timeHour < 13) moment = 'morning'
   if (timeHour >= 13 && timeHour < 19) moment = 'afternoon'
   if (timeHour >= 19) moment = 'evening'
-
+  console.log(weather)
   const weatherConditions = {}
   weatherConditions.thunderstorm = weather.weather.find(w => w.id >= 200 && w.id < 300) !== undefined
   weatherConditions.drizzle      = weather.weather.find(w => w.id >= 300 && w.id < 400) !== undefined
@@ -91,7 +114,7 @@ const lineMatching = (element, line, environment) => {
       if (
         (line.condition === undefined ||
           line.condition(element, environment) === true) &&
-        (line.needsName === undefined || element.name !== undefined)
+        (line.needsName === undefined || (element.name !== undefined && element.name.length < 20))
       ) {
         let template = line.template
         return template
@@ -103,13 +126,14 @@ const lineMatching = (element, line, environment) => {
 const writePoem = () => {
   // console.log(rawElements, weather, timezone)
 
-  const lines = window.lines
+  const lines = shuffle([].concat(window.lines))
 
-  const featuresCopy = [].concat(elements)
+  const featuresCopy = shuffle([].concat(elements))
   const numFeatures = featuresCopy.length
   const lineMatches = []
 
   // all features
+  console.log('using ', numFeatures, ' features and ', lines.length, ' lines')
   for (let i = 0; i <= numFeatures - 1; i++) {
     const feature = featuresCopy[i]
     // take all existing lines
@@ -125,20 +149,25 @@ const writePoem = () => {
     })
   }
 
-  // deduplicate line matches
+  console.log(lineMatches)
+
+  // deduplicate line matches (by line index)
   const uniqLineMatches = []
   const uniqLineMatchesIndexes = []
   lineMatches.forEach(l => {
     if (!uniqLineMatchesIndexes.includes(l.lineIndex)) {
-      // TODO transpile !!
-      const newLine = {...l}
+      const newLine = {
+        template: l.template,
+        feature: l.feature
+      }
       if (Array.isArray(newLine.template)) {
         newLine.template = [...newLine.template]
       }
-      uniqLineMatches.push(l)
+      uniqLineMatches.push(newLine)
       uniqLineMatchesIndexes.push(l.lineIndex)
     }
   })
+  console.log(uniqLineMatchesIndexes, uniqLineMatches)
 
   // no prioritizing: result will only depend on lines files:
   // - if there are more env rules, better chance to have env lines
@@ -174,7 +203,6 @@ const writePoem = () => {
     }
   }
   
-  console.log(finalLines, uniqLineMatches)
   document.querySelector('.js-poem').innerHTML = finalLines
     .join('<br>')
 }
@@ -204,6 +232,7 @@ const load = () => {
     (window.config.geocoder.token) ? `${window.config.geocoder.url}/${center.lng},${center.lat}.json?access_token=${window.config.geocoder.token}` : window.config.geocoder.url
   ]
 
+
   Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then(
     (jsons) => {
       const rawElements = jsons[0].elements.filter((e) => e.tags !== undefined)
@@ -217,13 +246,15 @@ const load = () => {
           return `${tag},${feature.tags[tag]}`
         })
       })
+      console.log('all usable features:')
       console.log(featuresDebug)
       environment = getEnvironment(weather, timezone)
+      console.log('env', environment)
 
-      const address = geocoder.features[0].place_name
+      const address = (geocoder.features.length) ? geocoder.features[0].place_name : 'Unknown place'
       document.querySelector('h1').innerText = address
 
-      if (rawElements.length < 10) {
+      if (rawElements.length < CONFIG.minRawElements) {
         fetch(
           `${window.config.overpass.url}?data=${getOverpassQL(
             center.lat,
@@ -236,10 +267,14 @@ const load = () => {
             const rawElements = json.elements.filter(
               (e) => e.tags !== undefined
             )
-            elements = getElements(rawElements)
-            writePoem()
-            toggleLoadingState(false)
-            // console.log(rawElements.map(e => e.tags))
+            if (rawElements.length < CONFIG.minRawElements) {
+              document.querySelector('.js-poem').innerHTML = 'There\'s not much around...'
+            } else {
+              elements = getElements(rawElements)
+              writePoem()
+              toggleLoadingState(false)
+              // console.log(rawElements.map(e => e.tags))
+            }
           })
       } else {
         writePoem()
@@ -255,21 +290,12 @@ const setCenter = () => {
 }
 
 const geolocate = () => {
-  map.locate({setView: true, maxZoom: 14});
+  map.locate({setView: true, maxZoom: 14})
 }
 
 
 const intro = () => {
   window.setTimeout(() => {
-    center = map.getCenter()
-    map.panTo({
-      lng: center.lng,
-      lat: center.lat + .01
-    }, {
-      animate: true,
-      duration: .2
-    } )
-
     map.on('movestart', () => {
       document.querySelector('.js-poem-container').classList.toggle('-hidden', true)
     })
@@ -287,10 +313,9 @@ const intro = () => {
     })
 
     document.querySelector('h1').addEventListener('click', writePoem)
-    document.querySelector('.js-poem').addEventListener('click', writePoem)
-
     document.querySelector('.js-geolocate').addEventListener('click', geolocate)
-  }, 100)
+    load()
+  }, 1000)
   
 }
 
@@ -299,7 +324,7 @@ if (window.L) {
   map = L.map('map', mapConfig)
   map.setView(center, 14)
   
-  var hash = new L.Hash(map);
+  var hash = new L.Hash(map)
   
   L.tileLayer(
     `${window.config.tiles.url}?access_token=${window.config.tiles.token}`,

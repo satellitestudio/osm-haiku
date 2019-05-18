@@ -62,7 +62,6 @@ html, body {
 .poem {
     display: block;
     position: absolute;
-    width: 100%;
     top: 50%;
     transform: translateY(-70%);
     left: 5rem;
@@ -71,6 +70,7 @@ html, body {
 .poem-inner {
     font-size: 4vw;
     line-height: 5.5vw;
+    pointer-events: none;
 }
 
 .credits {
@@ -114,7 +114,7 @@ h1 {
                                   supported by Chrome and Opera */
 }
 
-h1:hover, .poem-inner:hover, .credits a:hover {
+h1:hover, .credits a:hover {
     text-decoration: underline;
 }
 
