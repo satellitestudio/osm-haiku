@@ -7,6 +7,9 @@
 //   lat: 38.9
 // }
 let center = window.config.center
+let map
+let startLoadTimeout
+
 
 const CONFIG = {
   overpassRadius: 100,
@@ -20,21 +23,6 @@ const mapConfig = {
 if (window.config.maxBounds !== null && window.config.maxBounds !== undefined) {
   mapConfig.maxBounds = window.config.maxBounds
   mapConfig.maxBoundsViscosity = 1.0
-}
-
-let map
-if (window.L) {
-  map = L.map('map', mapConfig).setView(center, 14)
-
-  var hash = new L.Hash(map);
-  
-  L.tileLayer(
-    `${window.config.tiles.url}?access_token=${window.config.tiles.token}`,
-    {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }
-  ).addTo(map)
 }
 
 const getOverpassQL = (lat, lng, radius) => {
@@ -114,7 +102,7 @@ const lineMatching = (element, line, environment) => {
 
 const writePoem = () => {
   // console.log(rawElements, weather, timezone)
-  
+
   const lines = window.lines
 
   const featuresCopy = [].concat(elements)
@@ -256,27 +244,56 @@ const setCenter = () => {
   load()
 }
 
-let startLoadTimeout
 
-if (map) {
-  map.on('movestart', () => {
-    document.querySelector('.js-poem-container').classList.toggle('-hidden', true)
-  })
+
+
+const intro = () => {
+  window.setTimeout(() => {
+    center = map.getCenter()
+    map.panTo({
+      lng: center.lng,
+      lat: center.lat + .01
+    }, {
+      animate: true,
+      duration: 2
+    } )
+
+    map.on('movestart', () => {
+      document.querySelector('.js-poem-container').classList.toggle('-hidden', true)
+    })
+    
+    map.on('moveend', () => {
+      startLoadTimeout = setTimeout(() => {
+        document
+          .querySelector('.js-poem-container').classList.toggle('-hidden', false)
+        setCenter()
+      }, 800)
+    })
+    
+    map.on('move', () => {
+      clearTimeout(startLoadTimeout)
+    })
+  }, 100)
   
-  map.on('moveend', () => {
-    startLoadTimeout = setTimeout(() => {
-      document
-        .querySelector('.js-poem-container')
-        .classList.toggle('-hidden', false)
-      setCenter()
-    }, 800)
-  })
-  
-  map.on('move', () => {
-    clearTimeout(startLoadTimeout)
-  })
 }
 
-document.querySelector('h1').addEventListener('click', writePoem)
 
-load()
+if (window.L) {
+  map = L.map('map', mapConfig)
+  map.setView(center, 14)
+  
+  var hash = new L.Hash(map);
+  
+  L.tileLayer(
+    `${window.config.tiles.url}?access_token=${window.config.tiles.token}`,
+    {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }
+  ).addTo(map)
+
+  // TODOD
+  document.querySelector('h1').addEventListener('click', writePoem)
+
+  intro()
+}
