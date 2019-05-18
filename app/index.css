@@ -5,6 +5,7 @@ html, body {
     padding: 0;
     font-size: 10px;
     font-family: 'Cardo', serif;
+    overflow: hidden;
 }
 
 * {
@@ -28,6 +29,10 @@ html, body {
 
 .js-poem-container.-hidden {
     opacity: 0;
+}
+
+.js-poem-container.-disabled {
+    pointer-events: none;
 }
 
 #map {
@@ -61,12 +66,32 @@ html, body {
     top: 50%;
     transform: translateY(-70%);
     left: 5rem;
+}
+
+.poem-inner {
     font-size: 4vw;
     line-height: 5.5vw;
 }
 
-.poem.-disabled {
-    pointer-events: none;
+.credits {
+    opacity: 1;
+    transition: opacity 1s;
+    transition-delay: 1s;
+}
+
+.credits a {
+    font-size: 1rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    opacity: .5;
+    color: #000;
+    text-decoration: none;
+}
+
+.credits.-hidden {
+    opacity: 0;
+    transition: opacity 0s;
 }
 
 h1 {
@@ -89,7 +114,7 @@ h1 {
                                   supported by Chrome and Opera */
 }
 
-h1:hover, .poem:hover {
+h1:hover, .poem-inner:hover, .credits a:hover {
     text-decoration: underline;
 }
 

@@ -25,19 +25,22 @@
     <!--<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>-->
   </head>
   <body>
-    <div class="js-poem-container -hidden">
+    <div class="js-poem-container -hidden -disabled">
       <p class="overlay"></p>
-      <h1>
-        <!-- Ave Maria 29, Madrid.<br>
-      Sunday, 12th Nov -->
-      </h1>
-      <p class="js-poem poem -disabled">
-        <!-- A bar is closing.<br>
-      People rushing to the metro station.<br>
-      Children's laughter in the park.<br>
-      Cobbled stones.<br>
-      A chilly evening.<br> -->
-      </p>
+      <h1></h1>
+      <div class="poem">
+        <p class="js-poem poem-inner">
+          
+        </p>
+        <p class="js-credits credits -hidden">
+            <a href="https://www.openstreetmap.org/copyright">OpenStreetMap Contributors</a> /
+            <a href="https://satellitestud.io">Satellite Studio</a>
+            <br>
+            <a href="..">What is that ?</a>
+            <br>
+            <a href="#" class="js-geolocate">Geolocate me</a>
+          </p>
+      </div>
     </div>
     <div class="js-map-container map-container">
       <div id="map"></div>

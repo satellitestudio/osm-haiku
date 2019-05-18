@@ -183,8 +183,15 @@ let elements
 let environment
 
 const load = () => {
+  
+  const toggleLoadingState = (loading) => {
+    document.querySelector('.js-poem-container').classList.toggle('-disabled', loading)
+    document.querySelector('.js-credits').classList.toggle('-hidden', loading)
+  }
+  toggleLoadingState(true)
+
   document.querySelector('.js-poem').innerHTML = 'Making a haiku...'
-  document.querySelector('.js-poem').classList.toggle('-disabled', true)
+
   document.querySelector('h1').innerText = '...'
   const urls = [
     `${window.config.overpass.url}?data=${getOverpassQL(
@@ -231,12 +238,12 @@ const load = () => {
             )
             elements = getElements(rawElements)
             writePoem()
-            document.querySelector('.js-poem').classList.toggle('-disabled', false)
+            toggleLoadingState(false)
             // console.log(rawElements.map(e => e.tags))
           })
       } else {
         writePoem()
-        document.querySelector('.js-poem').classList.toggle('-disabled', false)
+        toggleLoadingState(false)
       }
     }
   )
@@ -247,7 +254,9 @@ const setCenter = () => {
   load()
 }
 
-
+const geolocate = () => {
+  map.locate({setView: true, maxZoom: 14});
+}
 
 
 const intro = () => {
@@ -279,6 +288,8 @@ const intro = () => {
 
     document.querySelector('h1').addEventListener('click', writePoem)
     document.querySelector('.js-poem').addEventListener('click', writePoem)
+
+    document.querySelector('.js-geolocate').addEventListener('click', geolocate)
   }, 100)
   
 }
