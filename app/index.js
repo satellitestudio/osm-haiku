@@ -296,14 +296,14 @@ const geolocate = () => {
 
 const intro = () => {
   window.setTimeout(() => {
+    document.querySelector('.js-poem-container').classList.toggle('-hidden', false)
     map.on('movestart', () => {
       document.querySelector('.js-poem-container').classList.toggle('-hidden', true)
     })
     
     map.on('moveend', () => {
       startLoadTimeout = setTimeout(() => {
-        document
-          .querySelector('.js-poem-container').classList.toggle('-hidden', false)
+        document.querySelector('.js-poem-container').classList.toggle('-hidden', false)
         setCenter()
       }, 800)
     })
