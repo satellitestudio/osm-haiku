@@ -1,20 +1,3 @@
-@font-face {
-    font-family: 'libre_baskervilleregular';
-    src: url('./assets/librebaskerville-regular-webfont.woff2') format('woff2'),
-    url('./assets/librebaskerville-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'libre_baskervilleitalic';
-    src: url('./assets/librebaskerville-italic-webfont.woff2') format('woff2'),
-    url('./assets/librebaskerville-italic-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
 @import url('https://fonts.googleapis.com/css?family=Cardo|Open+Sans:400,400i');
 
 html, body {
@@ -22,6 +5,7 @@ html, body {
     padding: 0;
     font-size: 10px;
     font-family: 'Cardo', serif;
+    overflow: hidden;
 }
 
 * {
@@ -40,11 +24,15 @@ html, body {
 }
 
 .js-poem-container {
-    transition: opacity 0.4s; 
+    transition: opacity 0.4s;
 }
 
 .js-poem-container.-hidden {
     opacity: 0;
+}
+
+.js-poem-container.-disabled {
+    pointer-events: none;
 }
 
 #map {
@@ -68,20 +56,43 @@ html, body {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
+    margin: 0;
 }
 
 .poem {
     display: block;
     position: absolute;
-    width: 100%;
     top: 50%;
     transform: translateY(-70%);
     left: 5rem;
+}
+
+.poem-inner {
     font-size: 4vw;
     line-height: 5.5vw;
     pointer-events: none;
 }
 
+.credits {
+    opacity: 1;
+    transition: opacity 1s;
+    transition-delay: 1s;
+}
+
+.credits a {
+    font-size: 1rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    opacity: .5;
+    color: #000;
+    text-decoration: none;
+}
+
+.credits.-hidden {
+    opacity: 0;
+    transition: opacity 0s;
+}
 
 h1 {
     display: block;
@@ -103,7 +114,7 @@ h1 {
                                   supported by Chrome and Opera */
 }
 
-h1:hover {
+h1:hover, .credits a:hover {
     text-decoration: underline;
 }
 
