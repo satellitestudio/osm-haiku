@@ -218,7 +218,8 @@ const load = () => {
   }
   toggleLoadingState(true)
 
-  document.querySelector('.js-poem').innerHTML = 'Making a haiku...'
+  document.querySelector('.js-poem').innerHTML = 'Writing a haiku...'
+  console.log(center)
 
   document.querySelector('h1').innerText = '...'
   const urls = [
@@ -232,6 +233,7 @@ const load = () => {
     (window.config.geocoder.token) ? `${window.config.geocoder.url}/${center.lng},${center.lat}.json?access_token=${window.config.geocoder.token}` : window.config.geocoder.url
   ]
 
+  console.log(urls)
 
   Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then(
     (jsons) => {
@@ -314,6 +316,7 @@ const intro = () => {
 
     document.querySelector('h1').addEventListener('click', writePoem)
     document.querySelector('.js-geolocate').addEventListener('click', geolocate)
+    center = map.getCenter()
     load()
   }, 1000)
   

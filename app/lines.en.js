@@ -135,15 +135,15 @@ window.lines = [
     tags: [['shop', 'bakery']]
   },
   {
-    template: ['Dead animals', 'Meat is murder', 'Carcasses hanging', 'A bloody scene'],
+    template: ['Dead animals', 'Meat is murder', 'Carcasses hanging', 'A bloody scene', 'Death for no reason is murder', 'The calf that you carve with a smile', 'Do you know how animals die?'],
     tags: [['shop', 'butcher']]
   },
   {
-    template: ['Short around the ears?', 'Snip snip snip', 'Start with the shampoo', 'Just a little trim to tidy it up', 'Just a little bit shorter'],
+    template: ['Short around the ears?', 'Snip snip snip', 'Start with the shampoo', 'Just a little trim to tidy it up', 'Just a little bit shorter', 'Hairdresser on fire'],
     tags: [['shop', 'hairdresser']]
   },
   {
-    template: ['You\'ll fall down the stairs', 'A flight of steps'],
+    template: ['You\'ll fall down the stairs', 'A flight of steps', 'Slippery stairs', 'Step by step'],
     tags: [['highway', 'steps']]
   },
   {

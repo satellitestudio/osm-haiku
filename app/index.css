@@ -23,15 +23,15 @@ html, body {
     padding: 0;
 }
 
-.js-poem-container {
+.poem-container {
     transition: opacity 0.4s;
 }
 
-.js-poem-container.-hidden {
+.poem-container.-hidden {
     opacity: 0;
 }
 
-.js-poem-container.-disabled {
+.poem-container.-disabled {
     pointer-events: none;
 }
 
@@ -49,56 +49,12 @@ html, body {
     font-size: 3rem;
 }
 
-.overlay {
-    background-color: white;
-    opacity: .6;
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    margin: 0;
-}
 
-.poem {
-    display: block;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-70%);
-    left: 5rem;
-}
-
-.poem-inner {
-    font-size: 4vw;
-    line-height: 5.5vw;
-    pointer-events: none;
-}
-
-.credits {
-    opacity: 1;
-    transition: opacity 1s;
-    transition-delay: 1s;
-}
-
-.credits a {
-    font-size: 1rem;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    font-style: italic;
-    opacity: .5;
-    color: #000;
-    text-decoration: none;
-}
-
-.credits.-hidden {
-    opacity: 0;
-    transition: opacity 0s;
-}
-
-h1 {
+h1, .credits {
     display: block;
     position: absolute;
     left: 5rem;
-    top: 3rem;
+
     font-size: 1.6rem;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
@@ -113,6 +69,52 @@ h1 {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
+
+h1 {
+    top: 3rem;
+}
+
+.credits {
+    bottom: 5rem;
+}
+
+.overlay {
+    background-color: white;
+    opacity: .6;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    margin: 0;
+}
+
+.poem {
+    display: block;
+    position: absolute;
+    top: 45%;
+    transform: translateY(-70%);
+    left: 5rem;
+    line-height: 5.5vw;
+    pointer-events: none;
+    font-size: 4vw;
+}
+
+.credits {
+    opacity: .5;
+    transition: opacity 1s;
+    transition-delay: .75s;
+}
+
+.credits a {
+    color: #000;
+    text-decoration: none;
+}
+
+.credits.-hidden {
+    opacity: 0;
+    transition: opacity 0s;
+}
+
 
 h1:hover, .credits a:hover {
     text-decoration: underline;
