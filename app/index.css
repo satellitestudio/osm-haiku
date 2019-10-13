@@ -56,12 +56,12 @@ html, body {
 }
 
 
-h1, .credits {
+h1, .credits, .attribution {
     display: block;
     position: absolute;
     left: 5rem;
 
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-family: 'Open Sans', Helvetica, sans-serif;
     font-weight: 400;
     /* opacity: .5; */
@@ -81,11 +81,15 @@ h1 {
     top: 3rem;
 }
 
-.credits {
+.attribution {
     bottom: 5rem;
 }
 
-.credits a, .credits a:hover {
+.credits {
+    bottom: 7rem;
+}
+
+.credits a, .credits a:hover, .attribution a, .attribution a:hover {
     color: inherit;
 }
 
@@ -115,9 +119,17 @@ h1 {
     transition-delay: .75s;
 }
 
-.credits a {
+.credits a, .attribution a {
     text-decoration: none;
-    margin: 0 6px;
+}
+
+.credits a {
+    margin-right: 6px;
+}
+
+.credits a:not(:first-child) {
+    margin-left: 6px;
+
 }
 
 .credits.-hidden {

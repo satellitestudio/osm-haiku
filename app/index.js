@@ -32,6 +32,7 @@ const CONFIG = {
 
 const mapConfig = {
   zoomControl: false,
+  attributionControl: false,
   minZoom: 3
 }
 if (window.config.maxBounds !== null && window.config.maxBounds !== undefined) {
@@ -335,11 +336,7 @@ if (window.L) {
   var hash = new L.Hash(map)
   
   L.tileLayer(
-    `${window.config.tiles.url}?access_token=${window.config.tiles.token}`,
-    {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }
+    `${window.config.tiles.url}?access_token=${window.config.tiles.token}`
   ).addTo(map)
 
   intro()

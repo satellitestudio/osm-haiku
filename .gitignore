@@ -1,9 +1,6 @@
-app/config.js
 app/mocks/**
 node_modules
 .DS_Store
 
 overpass/db
 overpass/planet.osm.bz2
-
-apiKeys.js
