@@ -32,26 +32,29 @@ const getOrdinal = (n) => {
 
 window.lines = [  
   {
-    template: ['The world is big', 'Lost in the city', 'The blurs of lifetimes', 'Thoughts of home', 'I think of home', 'Leaving home', 'Thinking of you', 'Closer', 'Far away', 'The lingering scent']
+    template: ['The world is big', 'Lost in the city', 'The blurs of lifetimes', 'Thoughts of home', 'I think of home', 'Leaving home', 'Thinking of you', 'Getting closer', 'Far away', 'This lingering scent']
   },
   {
     template: ['The night is dark', 'Under the moonlight', 'A moonless night', 'The stars far away', 'Murmurs in her sleep', 'A night stroll', 'Sweet dreams'],
     condition: (el, env) => env.moment === 'night',
   },
   {
-    template: ['Good afternoon'],
+    template: ['Good afternoon', 'The day going by', 'In the middle of the day', 'A day goes by'],
     condition: (el, env) => env.moment === 'afternoon',
   },
   {
-    template: 'The day is young',
+    template: ['The day is young', 'The air still crisp', 'Good morning', 'Sad morning'],
     condition: (el, env) => env.moment === 'morning',
   },
   {
     template: el => [
       `Welcome to ${el.name}`,
       `That's how it is in ${el.name}`,
-      `Another day in ${el.name}`
-    ][Math.floor(Math.random() * 3)],
+      `Another day in ${el.name}`,
+      `Life in ${el.name}`,
+      `Feeling good in ${el.name}`,
+      `Today in ${el.name}`,
+    ][Math.floor(Math.random() * 6)],
     tags: [['admin_level', '4'], ['admin_level', '5'],  ['admin_level', '6'], ['boundary', 'political']],
     needsName: true
   },
@@ -60,11 +63,15 @@ window.lines = [
     tags: [['waterway', 'canal'], ['waterway', 'river'], ['natural', 'water'], ['water', 'river']]
   },
   {
-    template: 'Cold bites',
+    template: ['Frostbite', 'It\'s freezing', 'So cold'],
+    condition: (el, env) => env.temperature < 0,
+  },
+  {
+    template: ['Cold bites', 'Quite chilly'],
     condition: (el, env) => env.temperature < 10,
   },
   {
-    template: 'Quite warm here.',
+    template: ['Quite warm here'],
     condition: (el, env) => env.temperature > 20,
   },
   {
@@ -72,11 +79,11 @@ window.lines = [
     condition: (el, env) => env.temperature > 30,
   },
   {
-    template: ['Into sunshine', 'The sun scatters', 'Toward the sun', 'A ray of sunlight', 'With sunlight', 'The sun strikes', 'Overflowing with sun'],
+    template: ['Into sunshine', 'The sun scatters', 'Toward the sun', 'A ray of sunlight', 'With sunlight', 'The sun strikes', 'Sun is shining'],
     condition: (el, env) => (env.weatherConditions.clear && env.moment !== 'night'),
   },
   {
-    template: ['Wet to the bone', 'Rain on the road like a mirror', 'Soaked pants', 'Pouring rain', 'Rain drops', 'Rain darkens'],
+    template: ['Wet to the bone', 'Rain on the road like a mirror', 'Soaked pants', 'Pouring rain', 'Rain drops', 'A dark rain'],
     condition: (el, env) => env.weatherConditions.rain || env.weatherConditions.drizzle,
   },
   {
@@ -98,7 +105,7 @@ window.lines = [
     tags: [['amenity','post_box']]
   },
   {
-    template: ['Peeing', 'I need to pee'],
+    template: ['Peeing', 'I need to pee', 'A toilet flushing'],
     tags: [['amenity','toilets']]
   },
   {
@@ -156,8 +163,9 @@ window.lines = [
     template: (el, env) => [
       `A wiff from ${el.name} makes me hungry`,
       `Full bellies at ${el.name}`,
-      `Eating at ${el.name} in the ${env.moment}?`
-    ][Math.floor(Math.random()*2)],
+      `A bite in ${el.name} in the ${env.moment}?`,
+      `Not too crowded in ${el.name}`,
+    ][Math.floor(Math.random()*4)],
     tags: [['amenity', 'restaurant']],
     needsName: true
   },
@@ -271,7 +279,7 @@ window.lines = [
     needsName: true
   },
   {
-    template: 'Praise him',
+    template: ['Praise him', 'Time to pray'],
     tags: [['amenity', 'place_of_worship']],
     condition: (el, env) => new Date().getDay() >= 6 && env.moment === 'morning'
   },
@@ -295,7 +303,7 @@ window.lines = [
         `Looking at you from the ${ordinal} floor`,
         `She looks from the ${ordinal} floor`,
         `All the way up to the ${ordinal} floor`
-      ][Math.floor(Math.random() * 2)]
+      ][Math.floor(Math.random() * 3)]
       return line
     },
     tags: [['building:levels', '*']],
@@ -307,6 +315,7 @@ window.lines = [
       const num = getNumWord(ele)
       const line = [
         `I count ${num} floors`,
+        `A ${num} floors building`,
         `${num.charAt(0).toUpperCase() + num.slice(1)} floors high`,
       ][Math.floor(Math.random() * 3)]
       return line
@@ -407,7 +416,7 @@ window.lines = [
     tags: [['power', '*']]
   },
   {
-    template: ['There\'s no crossing that fence', 'The broken fence', 'Picket fence'],
+    template: ['There\'s no crossing that fence', 'The broken fence', 'Crossing the fence'],
     tags: [['barrier', 'fence']]
   },
   {
@@ -419,7 +428,7 @@ window.lines = [
     tags: [['amenity', 'parking']],
   },
   {
-    template: ['Bikes like dead metal animals', 'Locked wheels'],
+    template: ['Bikes like metal skeletons', 'Locked wheels', 'Lots of bikes', 'That bike is missing a wheel'],
     tags: [['amenity', 'bicycle_parking']],
   },
   {
@@ -489,6 +498,16 @@ window.lines = [
   {
     template: (el, env) => `Meet at ${el.tags['addr:street']}, ${el.tags['addr:housenumber']}.`,
     condition: (el, env) => el.tags['addr:street'] !== undefined && el.tags['addr:housenumber'] !== undefined
+  },
+  {
+    template: (el) =>
+      [
+        `Meet me in ${el.tags['addr:street']}`,
+        `All along ${el.tags['addr:street']}`,
+        `Passing by ${el.tags['addr:street']}`,
+        `Walking in ${el.tags['addr:street']}`,
+      ][Math.floor(Math.random()*4)],
+    condition: (el) => el.tags['addr:street'] !== undefined
   },
   {
     template: (el) => el.tags['addr:street'],

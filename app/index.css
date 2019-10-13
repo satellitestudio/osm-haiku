@@ -53,6 +53,7 @@ html, body {
     left: 50vw;
     z-index: 99;
     font-size: 3rem;
+    pointer-events: none;
 }
 
 
@@ -60,11 +61,9 @@ h1, .credits, .attribution {
     display: block;
     position: absolute;
     left: 5rem;
-
     font-size: 1.3rem;
     font-family: 'Open Sans', Helvetica, sans-serif;
     font-weight: 400;
-    /* opacity: .5; */
     color: rgba(0,0,0, .5);
     cursor: pointer;
     text-shadow: 0 0 3px white;
@@ -115,8 +114,8 @@ h1 {
 }
 
 .credits {
-    transition: opacity 1s;
-    transition-delay: .75s;
+    transition: opacity .75s;
+    transition-delay: .25s;
 }
 
 .credits a, .attribution a {

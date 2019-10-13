@@ -84,8 +84,8 @@ const getEnvironment = (weather, timezone) => {
   const timeHour = parseInt(timezone.formatted.match(/(\d\d):/)[1])
   let moment
   if (timeHour > 0 && timeHour < 6) moment = 'night'
-  if (timeHour >= 6 && timeHour < 13) moment = 'morning'
-  if (timeHour >= 13 && timeHour < 19) moment = 'afternoon'
+  if (timeHour >= 6 && timeHour < 12) moment = 'morning'
+  if (timeHour >= 12 && timeHour < 19) moment = 'afternoon'
   if (timeHour >= 19) moment = 'evening'
   console.log(weather)
   const weatherConditions = {}
