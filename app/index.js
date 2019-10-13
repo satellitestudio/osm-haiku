@@ -26,7 +26,8 @@ let startLoadTimeout
 const CONFIG = {
   overpassRadius: 100,
   overpassRadiusExt: 400,
-  minRawElements: 20
+  minRawElements: 20,
+  fetchCenter: false,
 }
 
 const mapConfig = {
@@ -39,35 +40,39 @@ if (window.config.maxBounds !== null && window.config.maxBounds !== undefined) {
 }
 
 const getOverpassQL = (lat, lng, radius) => {
-  const ql = `[out:json][timeout:25];
+  const center = (CONFIG.fetchCenter) ? 'center' : ''
+  const ql = `[out:json][timeout:5];
   (
     nwr[~"."~"."](around:${radius},${lat},${lng});
-  <;);out tags center;
+  <;);out tags ${center};
   (
     way[~"landuse|landcover|natural"~"."](around:${radius * 4},${lat},${lng});
-  );out tags center;
+  );out tags ${center};
   is_in(${lat},${lng})->.a;
   relation(pivot.a);
-  out tags center;`
-  console.log(ql)
+  out tags ${center};`
+  console.log('Generated Overpass QL:', ql)
   return encodeURIComponent(ql)
 }
 
 const getElements = (rawElements) => {
   return rawElements.map((element) => {
-    const { lat, lon } =
-      element.type === 'node'
-        ? { lat: element.lat, lon: element.lon }
-        : element.center
-    // const distance = window.turf.distance(
-    //   window.turf.point([center.lng, center.lat]),
-    //   window.turf.point([lon, lat])
-    // )
-    return {
-      // distance,
+    const finalElement = {
       tags: element.tags,
       name: element.tags.name
     }
+    if (CONFIG.fetchCenter) {
+      const { lat, lon } =
+        element.type === 'node'
+          ? { lat: element.lat, lon: element.lon }
+          : element.center
+      const distance = window.turf.distance(
+        window.turf.point([center.lng, center.lat]),
+        window.turf.point([lon, lat])
+      )
+      element.distance = distance
+    }
+    return finalElement
   })
 }
 

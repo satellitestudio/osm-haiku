@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Cardo|Open+Sans:400,400i');
+@font-face {
+    font-family: 'Cardo';
+    src: url('./fonts/subset-Cardo-Regular.woff2') format('woff2'),
+        url('./fonts/subset-Cardo-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 html, body {
     margin: 0;
@@ -55,12 +61,13 @@ h1, .credits {
     position: absolute;
     left: 5rem;
 
-    font-size: 1.6rem;
-    font-family: 'Open Sans', sans-serif;
+    font-size: 1.4rem;
+    font-family: 'Open Sans', Helvetica, sans-serif;
     font-weight: 400;
-    font-style: italic;
-    opacity: .5;
+    /* opacity: .5; */
+    color: rgba(0,0,0, .5);
     cursor: pointer;
+    text-shadow: 0 0 3px white;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -76,6 +83,10 @@ h1 {
 
 .credits {
     bottom: 5rem;
+}
+
+.credits a, .credits a:hover {
+    color: inherit;
 }
 
 .overlay {
@@ -100,14 +111,13 @@ h1 {
 }
 
 .credits {
-    opacity: .5;
     transition: opacity 1s;
     transition-delay: .75s;
 }
 
 .credits a {
-    color: #000;
     text-decoration: none;
+    margin: 0 6px;
 }
 
 .credits.-hidden {
