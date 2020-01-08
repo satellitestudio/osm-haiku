@@ -8,12 +8,12 @@ window.config = {
     token: '5MS0NHJMM12G',
   },
   tiles: {
-    url: '//api.mapbox.com/styles/v1/nerik/cjggtikms001p2ro6qfw9uucs/tiles/256/{z}/{x}/{y}',
-    token: 'pk.eyJ1IjoibmVyaWsiLCJhIjoiY2p1OW9mejZmMmE4MjQ0dGFlYTJuZHBpOSJ9.IKy6HLGKXAknnjxRYkTQLg',
+    url: '//api.mapbox.com/styles/v1/josatellite/ck553m2210j5n1cp28u4a9dk7/tiles/256/{z}/{x}/{y}',
+    token: 'pk.eyJ1Ijoiam9zYXRlbGxpdGUiLCJhIjoiY2s1NTNxMzJwMDVoOTNscGNrOGhsNml0MSJ9.iM7Dxjz7L95jqgNTw5uxfw',
   },
   geocoder: {
     url: '//api.mapbox.com/geocoding/v5/mapbox.places',
-    token: 'pk.eyJ1IjoibmVyaWsiLCJhIjoiY2p1OW9mejZmMmE4MjQ0dGFlYTJuZHBpOSJ9.IKy6HLGKXAknnjxRYkTQLg',
+    token: 'pk.eyJ1Ijoiam9zYXRlbGxpdGUiLCJhIjoiY2s1NTNxMzJwMDVoOTNscGNrOGhsNml0MSJ9.iM7Dxjz7L95jqgNTw5uxfw',
   },
   overpass: {
     url: 'https://lz4.overpass-api.de/api/interpreter',
@@ -21,27 +21,3 @@ window.config = {
   center: { lat: 40.723619221714046, lng: -73.98190006613733 },
   maxBounds: null
 }
-
-// window.config = {
-//   openWeatherMap: {
-//     url: './mocks/weather.json',
-//     token: '',
-//   },
-//   timeZoneDB: {
-//     url: './mocks/timezone.json',
-//     token: '',
-//   },
-//   tiles: {
-//     url: '//api.mapbox.com/styles/v1/nerik/cjggtikms001p2ro6qfw9uucs/tiles/256/{z}/{x}/{y}',
-//     token: 'pk.eyJ1IjoibmVyaWsiLCJhIjoiY2p1OW9mejZmMmE4MjQ0dGFlYTJuZHBpOSJ9.IKy6HLGKXAknnjxRYkTQLg',
-//   },
-//   geocoder: {
-//     url: './mocks/geocoder.json',
-//   },
-//   overpass: {
-//     url: './mocks/overpass4.json',
-//   },
-//   center: { lat: 40.723619221714046, lng: -73.98190006613733 },
-//   maxBounds: null
-// }
-
