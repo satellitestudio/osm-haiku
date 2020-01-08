@@ -94,7 +94,7 @@ h1 {
 
 .overlay {
     background-color: white;
-    opacity: .6;
+    opacity: .85;
     position: absolute;
     width: 100vw;
     height: 100vh;
