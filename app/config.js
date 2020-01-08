@@ -8,8 +8,7 @@ window.config = {
     token: '5MS0NHJMM12G',
   },
   tiles: {
-    url: '//api.mapbox.com/styles/v1/josatellite/ck553m2210j5n1cp28u4a9dk7/tiles/256/{z}/{x}/{y}',
-    token: 'pk.eyJ1Ijoiam9zYXRlbGxpdGUiLCJhIjoiY2s1NTNxMzJwMDVoOTNscGNrOGhsNml0MSJ9.iM7Dxjz7L95jqgNTw5uxfw',
+    url: 'http://tile.stamen.com/toner/{z}/{x}/{y}.png',
   },
   geocoder: {
     url: '//api.mapbox.com/geocoding/v5/mapbox.places',
