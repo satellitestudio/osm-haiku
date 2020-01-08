@@ -236,10 +236,8 @@ const load = () => {
     )}`,
     `${window.config.openWeatherMap.url}?lat=${center.lat}&lon=${center.lng}&APPID=${window.config.openWeatherMap.token}&units=metric`,
     `${window.config.timeZoneDB.url}?key=${window.config.timeZoneDB.token}&format=json&by=position&lat=${center.lat}&lng=${center.lng}`, // might be unnecessary as owm has sunrise/sunset
-    (window.config.geocoder.token) ? `${window.config.geocoder.url}/${center.lng},${center.lat}.json?access_token=${window.config.geocoder.token}` : window.config.geocoder.url
+    `${window.config.geocoder.url}/?lat=${center.lat}&lon=${center.lng}&addressdetails=0&format=json`
   ]
-
-  console.log(urls)
 
   Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then(
     (jsons) => {
@@ -258,8 +256,8 @@ const load = () => {
       console.log(featuresDebug)
       environment = getEnvironment(weather, timezone)
       console.log('env', environment)
-
-      const address = (geocoder.features.length) ? geocoder.features[0].place_name : 'Unknown place'
+      console.log(geocoder)
+      const address = (geocoder.display_name) ? geocoder.display_name : 'Unknown place'
       document.querySelector('h1').innerText = address
 
       if (rawElements.length < CONFIG.minRawElements) {

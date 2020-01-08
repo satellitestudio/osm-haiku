@@ -11,8 +11,7 @@ window.config = {
     url: 'http://tile.stamen.com/toner/{z}/{x}/{y}.png',
   },
   geocoder: {
-    url: '//api.mapbox.com/geocoding/v5/mapbox.places',
-    token: 'pk.eyJ1Ijoiam9zYXRlbGxpdGUiLCJhIjoiY2s1NTNxMzJwMDVoOTNscGNrOGhsNml0MSJ9.iM7Dxjz7L95jqgNTw5uxfw',
+    url: '//nominatim.openstreetmap.org/reverse',
   },
   overpass: {
     url: 'https://lz4.overpass-api.de/api/interpreter',
