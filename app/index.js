@@ -225,9 +225,16 @@ const load = () => {
   toggleLoadingState(true)
 
   document.querySelector('.js-poem').innerHTML = 'Writing a haiku...'
-  console.log(center)
 
   document.querySelector('h1').innerText = '...'
+  fetch(`${window.config.geocoder.url}/?lat=${center.lat}&lon=${center.lng}&addressdetails=0&format=json`)
+    .then(r => r.json())
+    .then(geocoder => {
+      const address = (geocoder.display_name) ? geocoder.display_name : 'Unknown place'
+      document.querySelector('h1').innerText = address
+    })
+
+
   const urls = [
     `${window.config.overpass.url}?data=${getOverpassQL(
       center.lat,
@@ -236,7 +243,6 @@ const load = () => {
     )}`,
     `${window.config.openWeatherMap.url}?lat=${center.lat}&lon=${center.lng}&APPID=${window.config.openWeatherMap.token}&units=metric`,
     `${window.config.timeZoneDB.url}?key=${window.config.timeZoneDB.token}&format=json&by=position&lat=${center.lat}&lng=${center.lng}`, // might be unnecessary as owm has sunrise/sunset
-    `${window.config.geocoder.url}/?lat=${center.lat}&lon=${center.lng}&addressdetails=0&format=json`
   ]
 
   Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then(
@@ -257,8 +263,7 @@ const load = () => {
       environment = getEnvironment(weather, timezone)
       console.log('env', environment)
       console.log(geocoder)
-      const address = (geocoder.display_name) ? geocoder.display_name : 'Unknown place'
-      document.querySelector('h1').innerText = address
+
 
       if (rawElements.length < CONFIG.minRawElements) {
         fetch(
