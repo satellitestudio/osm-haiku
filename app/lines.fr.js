@@ -428,7 +428,7 @@ window.lines = [
     tags: [['amenity', 'parking']],
   },
   {
-    template: ['Vélos squelettes de métal', 'Antivol sur la roue', 'Une rangée de vélos0', 'Ce vélo n\'a plus de roues'],
+    template: ['Vélos squelettes de métal', 'Antivol sur la roue', 'Une rangée de vélos', 'Ce vélo n\'a plus de roues'],
     tags: [['amenity', 'bicycle_parking']],
   },
   {
