@@ -3,10 +3,6 @@ window.config = {
     url: '//api.openweathermap.org/data/2.5/weather',
     token: '110661baee7df170d491985ec65b9684',
   },
-  timeZoneDB: {
-    url: '//api.timezonedb.com/v2/get-time-zone',
-    token: '5MS0NHJMM12G',
-  },
   tiles: {
     url: 'http://tile.stamen.com/toner/{z}/{x}/{y}.png',
   },
@@ -16,6 +12,21 @@ window.config = {
   overpass: {
     url: 'https://lz4.overpass-api.de/api/interpreter',
   },
-  center: { lat: 40.723619221714046, lng: -73.98190006613733 },
+  center: { 
+    en: {lat: 40.723619221714046, lng: -73.98190006613733 },
+    es: {lat: 40.416894177003456, lng: -3.7034654617309566 },
+    fr: {lat: 48.853318567427955, lng: 2.348955273628235 },
+  },
+  labels: {
+    en: {
+      writing: 'Writing a haiku...',
+    },
+    es: {
+      writing: 'Escribiendo un haiku...',
+    },
+    fr: {
+      writing: 'Écriture du haiku...',
+    }
+  },
   maxBounds: null
 }

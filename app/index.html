@@ -31,11 +31,16 @@
       <div class="poem js-poem">
           ...
       </div>
-      <div class="js-credits credits -hidden">
-        <a href="#" class="js-geolocate">Locate me!</a> ※ 
-        <a href="http://satellitestud.io/blog/post/openstreetmap-haiku/" target="_blank">About</a> ※ 
-        <a href="//satellitestud.io">by Satellite Studio</a>
-      </div>
+      <ul class="js-credits credits -hidden">
+        <li><a href="#" class="js-geolocate">Locate me!</a></li>
+        <li><a href="http://satellitestud.io/blog/post/openstreetmap-haiku/" target="_blank">About</a></li>
+        <li><a href="//satellitestud.io">by Satellite Studio</a></li>
+        <li>Language: 
+          <a href="/?lg=en">en</a>
+          / <a href="/?lg=es">es</a>
+          <!--/ <a href="/?lg=fr">fr</a> -->
+        </li>
+      </ul>
     </div>
     <div class="js-map-container map-container">
       <div id="map"></div>
@@ -47,7 +52,28 @@
         &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
     </div>
     <script src="./config.js"></script>
-    <script src="./lines.en.js"></script>
-    <script src="./index.js"></script>
+
+    <script>
+      window.supportedLanguages = ['en', 'es' /*, 'fr'*/]
+      let userLg = 'en'
+      for (let i = 0; i < navigator.languages.length; i++) {
+        let navLg = navigator.languages[i].substr(0,2)
+        if (window.supportedLanguages.includes(navLg)) {
+          userLg = navLg
+          break
+        }
+      }
+
+      window.lg = new URL(window.location.href).searchParams.get('lg') || userLg;
+      let linesScript = document.createElement('script');
+      linesScript.src = `./lines.${lg}.js`;
+      linesScript.onload = function () {
+        let mainScript = document.createElement('script');
+        mainScript.src = `./index.js`;
+        document.head.appendChild(mainScript);
+      };
+      document.head.appendChild(linesScript);
+    </script>
+
   </body>
 </html>

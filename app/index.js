@@ -1,11 +1,3 @@
-// let center = {
-//   lng: -3.7009763717651363,
-//   lat: 40.40851290848389
-// }
-// let center = {
-//   lng: -77.03,
-//   lat: 38.9
-// }
 const shuffle = (a) => {
   var j, x, i
   for (i = a.length - 1; i > 0; i--) {
@@ -18,7 +10,7 @@ const shuffle = (a) => {
 }
 
 
-let center = window.config.center
+let center = window.config.center[window.lg]
 let map
 let startLoadTimeout
 
@@ -77,11 +69,8 @@ const getElements = (rawElements) => {
   })
 }
 
-const getEnvironment = (weather, timezone) => {
-  if (timezone.status === 'FAILED') {
-    return
-  }
-  const timeHour = parseInt(timezone.formatted.match(/(\d\d):/)[1])
+const getEnvironment = (weather) => {
+  const timeHour = new Date().getUTCHours() + (weather.timezone / 60 / 60)
   let moment
   if (timeHour > 0 && timeHour < 6) moment = 'night'
   if (timeHour >= 6 && timeHour < 12) moment = 'morning'
@@ -130,8 +119,6 @@ const lineMatching = (element, line, environment) => {
 }
 
 const writePoem = () => {
-  // console.log(rawElements, weather, timezone)
-
   const lines = shuffle([].concat(window.lines))
 
   const featuresCopy = shuffle([].concat(elements))
@@ -224,7 +211,7 @@ const load = () => {
   }
   toggleLoadingState(true)
 
-  document.querySelector('.js-poem').innerHTML = 'Writing a haiku...'
+  document.querySelector('.js-poem').innerHTML = window.config.labels[window.lg].writing
 
   document.querySelector('h1').innerText = '...'
   fetch(`${window.config.geocoder.url}/?lat=${center.lat}&lon=${center.lng}&addressdetails=0&format=json`)
@@ -242,15 +229,13 @@ const load = () => {
       CONFIG.overpassRadius
     )}`,
     `${window.config.openWeatherMap.url}?lat=${center.lat}&lon=${center.lng}&APPID=${window.config.openWeatherMap.token}&units=metric`,
-    `${window.config.timeZoneDB.url}?key=${window.config.timeZoneDB.token}&format=json&by=position&lat=${center.lat}&lng=${center.lng}`, // might be unnecessary as owm has sunrise/sunset
   ]
 
   Promise.all(urls.map((url) => fetch(url).then((resp) => resp.json()))).then(
     (jsons) => {
       const rawElements = jsons[0].elements.filter((e) => e.tags !== undefined)
       const weather = jsons[1]
-      const timezone = jsons[2]
-      const geocoder = jsons[3]
+      console.log(weather)
       elements = getElements(rawElements)
 
       const featuresDebug = elements.map(feature => {
@@ -260,9 +245,8 @@ const load = () => {
       })
       console.log('all usable features:')
       console.log(featuresDebug)
-      environment = getEnvironment(weather, timezone)
+      environment = getEnvironment(weather)
       console.log('env', environment)
-      console.log(geocoder)
 
 
       if (rawElements.length < CONFIG.minRawElements) {
@@ -334,7 +318,7 @@ const intro = () => {
 
 if (window.L) {
   map = L.map('map', mapConfig)
-  map.setView(center, 14)
+  map.setView(center, 15)
   
   var hash = new L.Hash(map)
   
