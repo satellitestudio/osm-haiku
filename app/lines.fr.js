@@ -1,7 +1,7 @@
 // https://openweathermap.org/weather-conditions  
 
-const a = ['', 'un ', 'deux ', 'trois ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen ']
-const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety']
+const a = ['', 'un ', 'deux ', 'trois ', 'quatre ', 'cinq ', 'six ', 'sept ', 'huit ', 'neuf ', 'dix ', 'onze ', 'douze ', 'treize ', 'quatorze ', 'quinze ', 'seize ', 'dix-sept ', 'dix-huit ', 'dix-neuf ']
+const b = ['', '', 'vingt', 'trente', 'quarante', 'conquante', 'soixante', 'septante', 'octante', 'nonante']
 
 const regex = /^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/
 
@@ -32,462 +32,462 @@ const getOrdinal = (n) => {
 
 window.lines = [  
   {
-    template: ['The world is big', 'Lost in the city', 'The blurs of lifetimes', 'Thoughts of home', 'I think of home', 'Leaving home', 'Thinking of you', 'Getting closer', 'Far away', 'This lingering scent']
+    template: ['Le monde est grand', 'Perdu dans la ville', 'La vie en flou', 'Penser à la maison', 'Partir de chez soi', 'Je pense à toi', 'Je me rapproche', 'Au loin', 'Cette odeur persistante']
   },
   {
-    template: ['The night is dark', 'Under the moonlight', 'A moonless night', 'The stars far away', 'Murmurs in her sleep', 'A night stroll', 'Sweet dreams'],
+    template: ['La nuit est noire', 'Sous la lune', 'Une nuit sans lune', 'Les étoiles au loin', 'Murmure dans son sommeil', 'Une balade la nuit', 'Fais de beuz rêves'],
     condition: (el, env) => env.moment === 'night',
   },
   {
-    template: ['Good afternoon', 'The day going by', 'In the middle of the day', 'A day goes by'],
+    template: ['Bonjour', 'Le jour qui passe', 'Dans la journée', 'Les jours passent'],
     condition: (el, env) => env.moment === 'afternoon',
   },
   {
-    template: ['The day is young', 'The air still crisp', 'Good morning', 'Sad morning'],
+    template: ['La journée commence', 'L\'air est encore frais', 'Belle matinée', 'Triste matin'],
     condition: (el, env) => env.moment === 'morning',
   },
   {
     template: el => [
-      `Welcome to ${el.name}`,
-      `That's how it is in ${el.name}`,
-      `Another day in ${el.name}`,
-      `Life in ${el.name}`,
-      `Feeling good in ${el.name}`,
-      `Today in ${el.name}`,
+      `Bienvenue en ${el.name}`,
+      `C'est comme ça en ${el.name}`,
+      `Encore un jour en ${el.name}`,
+      `La vie en ${el.name}`,
+      `On se sent bien en ${el.name}`,
+      `Aujourd'hui en ${el.name}`,
     ][Math.floor(Math.random() * 6)],
     tags: [['admin_level', '4'], ['admin_level', '5'],  ['admin_level', '6'], ['boundary', 'political']],
     needsName: true
   },
   {
-    template: ['Your reflection', 'Water like glass', 'Floating there', 'Quiet water', 'On the water\'s surface'],
+    template: ['Ton reflet', 'L\'eau comme un miroir', 'Ça flotte', 'Eau calme', 'Sur la surface de l\'eau'],
     tags: [['waterway', 'canal'], ['waterway', 'river'], ['natural', 'water'], ['water', 'river']]
   },
   {
-    template: ['Frostbite', 'It\'s freezing', 'So cold'],
+    template: ['Morsure du froid', 'On se les gèle', 'Tellement froid'],
     condition: (el, env) => env.temperature < 0,
   },
   {
-    template: ['Cold bites', 'Quite chilly'],
+    template: ['Il fait frais', 'Plutôt froid'],
     condition: (el, env) => env.temperature < 10,
   },
   {
-    template: ['Quite warm here'],
+    template: ['Il fait bon ici'],
     condition: (el, env) => env.temperature > 20,
   },
   {
-    template: ['It is very hot.', 'A drop of sweat'],
+    template: ['Il fait très chaud', 'Une goutte de sueur'],
     condition: (el, env) => env.temperature > 30,
   },
   {
-    template: ['Into sunshine', 'The sun scatters', 'Toward the sun', 'A ray of sunlight', 'With sunlight', 'The sun strikes', 'Sun is shining'],
+    template: ['Rayon de soleil', 'Le soleil illumine', 'Vers le soleil', 'La lumière du soleil', 'Le soleil tape', 'Le soleil brille'],
     condition: (el, env) => (env.weatherConditions.clear && env.moment !== 'night'),
   },
   {
-    template: ['Wet to the bone', 'Rain on the road like a mirror', 'Soaked pants', 'Pouring rain', 'Rain drops', 'A dark rain'],
+    template: ['Mouillé jusqu\'à l\'os', 'À mettre un chien dehors', 'La pluie sur la route', 'Pantalon mouillé', 'Il pleut', 'Gouttes de pluie', 'Une sombre pluie'],
     condition: (el, env) => env.weatherConditions.rain || env.weatherConditions.drizzle,
   },
   {
-    template: ['So many books', 'Falls from the book', 'On the shelves', 'Yellowed pages', 'A blurry paragraph', 'An old book'],
+    template: ['Tellement de livres', 'Lire un livre', 'Sur les étagères', 'Pages jaunies', 'Un long paragraphe', 'Un vieux livre'],
     tags: [['amenity','library'], ['shop', 'books']],
   },
   {
-    template: ['Yawns in the classroom', 'A day of learning starts'],
-    tags: [['amenity','university'],['amenity','school']],
+    template: ['On baille dans la classe', 'Une journée d\'études commence'],
     condition: (el, env) => env.moment === 'morning',
+    tags: [['amenity','university'],['amenity','school']],
   },
   {
-    template: ['Those kids would rather be outside', 'Another depressed teacher'],
+    template: ['Les enfants préfereraient jouer dehors', 'Silence dans la classe', 'Un instit déprimé'],
     tags: [['amenity','school']],
     condition: (el, env) => env.moment === 'afternoon',
   },
   {
-    template: ['No one sends letters anymore', 'Where are those letters going to?', 'To whom it may concern', 'Dear you', 'A love letter'],
+    template: ['Plus personne n\'envoie de lettres', 'Où vont ces lettres?', 'À l\'attention de', 'Cher toi', 'Une lettre d\'amour'],
     tags: [['amenity','post_box']]
   },
   {
-    template: ['Peeing', 'I need to pee', 'A toilet flushing'],
+    template: ['Plic ploc', 'Aux toilettes', 'Une chasse d\'eau'],
     tags: [['amenity','toilets']]
   },
   {
-    template: 'The ferry arrives late again',
+    template: 'Le ferry est en retard',
     tags: [['route','ferry']]
   },
   {
-    template: ['A couple getting a loan', 'A couple getting a mortgage'],
+    template: ['Un couple demand un prêt', 'Ceci est un hold-up'],
     tags: [['amenity','bank']],
     condition: (el, env) => env.moment === 'morning',
   },
   {
-    template: ['The scent of money', 'On the bank statement', 'On the cashpoint screen', 'No money left'],
+    template: ['L\'argent n\'a pas d\'odeur', 'Sur le relevé de compte', 'Sur l\'écran du distributeur', 'Plus d\'argent'],
     tags: [['amenity','bank'], ['amenity', 'atm']]
   },
   {
-    template: ['A supermarket hustle and bustle', 'Salad cabbage and carrots', 'The cashier\'s bored', 'A lonely aisle', 'Under the neon', 'Fresh produce'],
+    template: ['L\'agitation du supermarché', 'Salade chou et carottes', 'Le caissier s\'ennuie', 'Un rayon vide', 'Sous les néons', 'Produits frais'],
     tags: [['shop', 'supermarket']]
   },
   {
-    template: ['A deserved vacation', 'Planning our trip', 'All inclusive'],
+    template: ['Des vacances méritées', 'Vive les vacances', 'Tous frais inclus'],
     tags: [['shop', 'travel_agency']]
   },
   {
-    template: ['Dummies staring behind the glass', 'A red dress', 'A blue shirt', 'My summer dress', 'Fabric on skin'],
+    template: ['Les mannequins te regardent', 'Une robe rouge', 'Une chemise bleue', 'Ma robe d\'été', 'Le tissu sur la peau'],
     tags: [['shop', 'clothes']]
   },
   {
-    template: ['Cooking ustensils', 'I need new knives'],
+    template: ['Fourchettes et couteaux', 'Besoin d\'assiettes'],
     tags: [['shop', 'houseware']]
   },
   {
-    template: ['The smell of fresh bread', 'Our daily bread', 'A baker rests', 'No bread left', 'Bread crumbs'],
+    template: ['L\'odeur du pain frais', 'Notre pain quotidien', 'Le boulanger se repose', 'Plus de baguettes', 'Miettes de pain', 'Et avec ceci?', 'Ce sera tout?'],
     tags: [['shop', 'bakery']]
   },
   {
-    template: ['Dead animals', 'Meat is murder', 'Carcasses hanging', 'A bloody scene', 'Death for no reason is murder', 'The calf that you carve with a smile', 'Do you know how animals die?'],
+    template: ['Cadavres d\'animaux', 'Mangez moins de viande', 'Les carcasses pendouillent', 'Une scène de crime', 'La mort sans raison c\'est le meurtre', 'Comment les animaux meurent?'],
     tags: [['shop', 'butcher']]
   },
   {
-    template: ['Short around the ears?', 'Snip snip snip', 'Start with the shampoo', 'Just a little trim to tidy it up', 'Just a little bit shorter', 'Hairdresser on fire'],
+    template: ['Dégagé au dessus des oreilles?', 'Snip snip snip', 'D\'abord le shampoing', 'Juste rafraîchir', 'Juste un peu plus court', 'Instinc\'tif'],
     tags: [['shop', 'hairdresser']]
   },
   {
-    template: ['You\'ll fall down the stairs', 'A flight of steps', 'Slippery stairs', 'Step by step'],
+    template: ['Tomber dans les escaliers', 'Une volée de marches', 'Les marches glissantes', 'Pas à pas'],
     tags: [['highway', 'steps']]
   },
   {
-    template: (el, env) => `Fresh coffee from ${el.name}`,
+    template: (el, env) => `Café frais de ${el.name}`,
     tags: [['amenity', 'cafe'], ['cuisine', 'coffee_shop']],
     condition: (el, env) => env.moment === 'morning',
     needsName: true
   },
   {
     template: (el, env) => [
-      `A wiff from ${el.name} makes me hungry`,
-      `Full bellies at ${el.name}`,
-      `A bite in ${el.name} in the ${env.moment}?`,
-      `Not too crowded in ${el.name}`,
+      `Le fumet de ${el.name} donne faim`,
+      `Ventres bien remplis à ${el.name}`,
+      `Un casse-croûte à ${el.name}`,
+      `Pas trop de monde à ${el.name}`,
     ][Math.floor(Math.random()*4)],
     tags: [['amenity', 'restaurant']],
     needsName: true
   },
   {
-    template: ['You are what you eat', 'Coming hot'],
+    template: ['Tu es ce que tu manges', 'Chaud devant!'],
     tags: [['amenity', 'restaurant']]
   },
   {
-    template: ['I need a coffee', 'Coffee smells good', 'Sipping her coffee', 'The same pot of coffee', 'The coffeecup still warm'],
+    template: ['Besoin d\'un café', 'Ce café sent bon', 'Siroter mon café', 'La tasse encore chaude'],
     tags: [['amenity', 'cafe'], ['cuisine', 'coffee_shop']]
   },
   {
-    template: ['The bottle is empty', 'She drank', 'The waitress serves', 'The burn of the whiskey', 'Five fingers of scotch', 'In my beer', 'Bitter wine', 'I\'m a drunk'],
+    template: ['La bouteille est vide', 'Elle boit', 'Il boit', 'Le serveur arrive', 'Juste un doigt', 'Dans ma bière', 'Petite piquette', 'Je suis saoul'],
     tags: [['amenity', 'bar'], ['amenity', 'pub']]
   },
   {
-    template: (el) => `Getting drunk at ${el.name}`,
+    template: (el) => `S'ennivrer à ${el.name}`,
     tags: [['amenity', 'bar'], ['amenity', 'pub']],
     needsName: true
   },
   {
-    template: (el) => `Beer flows in ${el.name}`,
+    template: (el) => `La bière coule à ${el.name}`,
     tags: [['amenity', 'bar'], ['amenity', 'pub']],
     needsName: true
   },
   {
-    template: ['Pineapple on pizzas ?', 'I don\'t eat the pizza crust', 'High on wheat and cheese', 'Pepperoni and cheese', 'The faint memory of Napoli', 'Hot calzone'],
+    template: ['Pizza à l\'ananas ?', 'Je ne mange pas les croûtes', 'Blé tomate et fromage', 'Pepperoni et fromage', 'Souvenir de Naples', 'Une calzone bien chaude'],
     tags: [['cuisine', 'pizza']]
   },
   {
-    template: ['Smells garlic', 'Buon appetito'],
+    template: ['Ça sent l\'ail', 'Buon appetito'],
     tags: [['cuisine', 'italian']]
   },
   {
-    template: ['A round bun with sesame', 'Juicy burgers and moist buns', 'Flipping burgers'],
+    template: ['Un pain rond au sésame', 'Steak saignant et pain humide', 'Retourner les steaks'],
     tags: [['cuisine', 'burger']]
   },
   {
-    template: ['Spring roll', 'Dim sum', 'A lonely noodle', 'A century old egg'],
+    template: ['Rouleau de printemps', 'Dim sum', 'Une nouille perdue', 'Un oeuf de cent ans'],
     tags: [['cuisine', 'chinese']]
   },
   {
-    template: ['A plate of sushi', 'Ginger and wasabi', 'Sake to wash it down'],
+    template: ['Un plat de sushis', 'Gingembre et wasabi', 'Un peu de saké pour faire passer'],
     tags: [['cuisine', 'japanese']]
   },
   {
-    template: ['Hot jalapeños', 'Mexico in my heart'],
+    template: ['Brûlants jalapeños', 'Mexico dans mon coeur'],
     tags: [['cuisine', 'mexican']]
   },
   {
-    template: ['Remember Istanbul', 'Delicious köfte'],
+    template: ['Souviens-toi Istanbul', 'Délicieux köfte'],
     tags: [['cuisine', 'turkish'], ['cuisine', 'kebab']], 
   },
   {
-    template: ['A lonely shoe there','These boots are made for walking'],
+    template: ['Une chaussure toute sule','Quelles belles bottes'],
     tags: [['shop','shoes']]
   },
   {
-    template: 'Heat on the pavement stones',
+    template: 'La chaleur sur les pavés',
     tags: [['surface', 'paving_stones']],
     condition: (el, env) => env.temperature > 20
   },
   {
-    template: ['A greasy smell', 'Sad soft fries', 'Deep fried'],
+    template: ['Une audeur de gras', 'Frite trop molle', 'Trop de friture'],
     tags: [['amenity', 'fast_food']]
   },
   {
-    template: 'A poor soul on a bench',
+    template: 'Un âme perdue sur un banc',
     tags: [['amenity', 'bench'], ['bench', 'yes']],
     condition: (el, env) => env.moment === 'night'
   },
   {
-    template: 'Glass shattered',
+    template: 'Bris de verre',
     tags: [['recycling:glass', 'true']],
   },
   {
-    template: 'Commuting back home',
+    template: 'Metro boulot dodo',
     tags: [['subway', 'yes'], ['railway', 'subway_entrance']]
   },
   {
-    template: ['Should we take the metro?', 'Warm air from the subway entrance'],
+    template: ['On prend le metro?', 'L\'air chaud du metro', 'Il fait beau dans le metro'],
     tags: [['railway', 'subway_entrance']]
   },
   {
-    template: 'Going to work',
+    template: 'On va au boulot',
     tags: [['subway', 'yes'], ['railway', 'subway_entrance']],
     condition: (el, env) => env.moment === 'morning'
   },
   {
-    template: 'Someone has cut in line at the theater',
+    template: 'La queue devant le cinéma',
     tags: [['amenity', 'theatre']],
     condition: (el, env) => env.moment === 'evening'
   },
   {
-    template: 'Is it too early for a beer?',
+    template: 'Trop tôt pour une bière?',
     tags: [['amenity', 'pub']],
     condition: (el, env) => env.moment === 'morning'
   },
   {
-    template: ['The tourists are already sleeping'],
+    template: ['Les touristes dorment déjà'],
     tags: [['tourism', 'hotel']],
     condition: (el, env) => env.moment === 'evening'
   },
   {
-    template: ['Against the hotel windows', 'The desk clerk', 'Cockroach scurries', `Room ${Math.floor(Math.random() * 100)}`],
+    template: ['Derrière la fenêtre de l\'hôtel', 'La réceptionniste', 'Un cafard passe', `Chambre ${Math.floor(Math.random() * 100)}`],
     tags: [['tourism', 'hotel']]
   },
   {
-    template: el => `In the lobby of ${el.name}`,
+    template: el => `Dans le hall de ${el.name}`,
     tags: [['tourism', 'hotel']],
     needsName: true
   },
   {
-    template: ['Praise him', 'Time to pray'],
+    template: ['Amen', 'L\'heure de prier'],
     tags: [['amenity', 'place_of_worship']],
     condition: (el, env) => new Date().getDay() >= 6 && env.moment === 'morning'
   },
   {
-    template: ['In the garage', 'In the garage where I belong'],
+    template: ['Dans le garage', 'Paye ton parking'],
     tags: [['building', 'garage']]
   },
   {
-    template: ['A skyscraper', 'A skyscraper towers above the city', 'Reaching the sky'],
+    template: ['Un gratte-ciel', 'Un gratte-ciel surplombe la ville', 'Un bâtiment jusq\'au ciel'],
     tags: [['building:levels', '*']],
     condition: (el) => parseInt(el.tags['building:levels']) >= 20
   },
-  {
-    template: el => {
-      const ele = parseInt(el.tags['building:levels'])
+  // {
+  //   template: el => {
+  //     const ele = parseInt(el.tags['building:levels'])
       
-      const ordinal = getOrdinal(ele)
-      console.log(ele)
+  //     const ordinal = getOrdinal(ele)
+  //     console.log(ele)
 
-      const line = [
-        `Looking at you from the ${ordinal} floor`,
-        `She looks from the ${ordinal} floor`,
-        `All the way up to the ${ordinal} floor`
-      ][Math.floor(Math.random() * 3)]
-      return line
-    },
-    tags: [['building:levels', '*']],
-    condition: (el) => parseInt(el.tags['building:levels']) >= 1
-  },
+  //     const line = [
+  //       `Looking at you from the ${ordinal} floor`,
+  //       `She looks from the ${ordinal} floor`,
+  //       `All the way up to the ${ordinal} floor`
+  //     ][Math.floor(Math.random() * 3)]
+  //     return line
+  //   },
+  //   tags: [['building:levels', '*']],
+  //   condition: (el) => parseInt(el.tags['building:levels']) >= 1
+  // },
+  // {
+  //   template: el => {
+  //     const ele = parseInt(el.tags['building:levels'])
+  //     const num = getNumWord(ele)
+  //     const line = [
+  //       `I count ${num} floors`,
+  //       `A ${num} floors building`,
+  //       `${num.charAt(0).toUpperCase() + num.slice(1)} floors high`,
+  //     ][Math.floor(Math.random() * 3)]
+  //     return line
+  //   },
+  //   tags: [['building:levels', '*']],
+  //   condition: (el) => parseInt(el.tags['building:levels']) >= 3
+  // },
   {
-    template: el => {
-      const ele = parseInt(el.tags['building:levels'])
-      const num = getNumWord(ele)
-      const line = [
-        `I count ${num} floors`,
-        `A ${num} floors building`,
-        `${num.charAt(0).toUpperCase() + num.slice(1)} floors high`,
-      ][Math.floor(Math.random() * 3)]
-      return line
-    },
-    tags: [['building:levels', '*']],
-    condition: (el) => parseInt(el.tags['building:levels']) >= 3
-  },
-  {
-    template: ['Walking on the zebra', 'White paint on concrete', 'Crossing the road'],
+    template: ['Sur le passage clouté', 'Peinture blanche sur bitume', 'On traverse la rue'],
     tags: [['footway', 'crossing'], ['highway', 'crossing']],
   },
   {
-    template: 'A hero remembered',
+    template: 'Le souvenir d\'un héros',
     tags: [['historic', 'memorial'], ['historic', 'monumet']],
   },
   {
-    template: ['Green. Red. Green. Red.', 'Traffic light goes red'],
+    template: ['Vert. Rouge. Vert. Rouge.', 'Le feu passe au rouge'],
     tags: [['highway', 'traffic_signals']],
   },
   {
-    template: ['Onto the highway', 'A truck shifting gears', 'Busy highway', 'Above the freeway noise', 'A passing car'],
+    template: ['Entrer sur l\'autoroute', 'Un camion passe la cinquième', 'Bouchon sur l\'autoroute', 'Au dessus du bruit de l\'autoroute', 'Une voiture fonce'],
     tags: [['highway', 'motorway']],
   },
   {
-    template: ['On the bridge with love locks', 'On the other side', 'Of the bridge', 'Over the bridge', 'Under the bridge'],
+    template: ['Cadenas de l\'amour', 'De l\'autre côté', 'Du pont', 'Sur le pont', 'Sous le pont'],
     tags: [['bridge', 'yes']],
   },
   {
-    template: ['A halo in the dark', 'Moths flocking around the light'],
+    template: ['Un halo dans le noir', 'Papillons de nuit'],
     tags: [['highway', 'street_lamp']],
     condition: (el, env) => env.moment === 'night'
   },
   {
-    template: 'A train underneath',
+    template: 'Un metro sous le sol',
     tags: [['subway', 'route']],
   },
   {
-    template: ['Buses passing through', 'The bus honking', 'The warm belly of the bus'],
+    template: ['Les bus qui passent', 'Le bus klaxonne', 'Le ventre chaud du bus'],
     tags: [['route', 'bus']],
   },
   {
-    template: ['Waiting for the bus', 'Finally round the bend', 'Crowded bus'],
+    template: ['Attendre le bus', 'Enfin le bus', 'Le bus surpeuplé'],
     tags: [['highway', 'bus_stop']],
   },
   {
-    template: (el) => `A bus arriving at ${el.name}`,
+    template: (el) => `Un bus arriuve à ${el.name}`,
     tags: [['highway', 'bus_stop']],
     needsName: true,
   },
   {
-    template: ['The grass is green', 'A walk in the park', 'A bird in the tree'],
+    template: ['L\'herbe est verte', 'Une balade au parc', 'Un oiseau dans l\'arbre'],
     tags: [['leisure', 'park']],
   },
   {
-    template: 'Late night stroll',
+    template: 'Balade nocturne',
     tags: [['leisure', 'park']],
     condition: (el, env) => env.moment === 'night',
   },
   {
-    template: ['High up in the trees', 'Branches of the tree'],
+    template: ['La haut dans l\'arbre', 'Les branches de l\'arbre'],
     tags: [['natural', 'wood'], ['natural', 'tree']],
   },
   {
-    template: ['Can you hear the seagulls ?', 'Scent of the sea', 'The sea breeze', 'Tide change', 'Salty air', 'Out to the sea', 'The shades of the sea', 'From the tidal pool', 'The murmur of waves'],
+    template: ['Entends-tu les mouettes ?', 'L\'odeur de la mer', 'Les embruns', 'La marée monte', 'L\'air est salé', 'Partir en mer', 'Le bleu de l\'océan', 'Le murmure du ressac'],
     tags: [['natural', 'coastline']],
   },
   {
-    template: ['A vacant lot', 'In this empty place', 'This is a wasteland'],
+    template: ['Un terrain vague', 'Un endroit vide', 'C\'est à l\'abandon'],
     tags: [['landuse', 'brownfield']],
   },
   {
-    template: ['Rest in peace', 'Forever remember', 'A great sadness', 'The small headstone', 'Cemetary walk', 'Her name on the marble', 'At the funeral'],
+    template: ['Reste en paix', 'Dans nos mémoires', 'Une grande tristesse', 'Petite pierre tombale', 'Balade au cimetière', 'Son nom sur le marbre', 'Aux funérailles'],
     tags: [['landuse', 'cemetery'], ['amenity', 'grave_yard']]
   },
   {
-    template: ['This is spooky', 'Something evil\'s lurking from the dark', 'Thriller night'],
+    template: ['Angoissant', 'Une présence inquiétante', 'Thriller night'],
     tags: [['landuse', 'cemetery'], ['amenity', 'grave_yard']],
     condition: (el, env) => env.moment === 'night'
   },
   {
-    template: ['A splash of green', 'The grass is always greener', 'Blades of grass', 'A small weed', 'Dry grass', 'Wind in the clover', 'Grows high grass'],
+    template: ['Une touche de vert', 'L\'herbe est plus verte', 'Brins d\'herbe', 'Une petite plante', 'L\'herbe sèche', 'Le vent dans les trèfles', 'L\'herbe pousse haut'],
     tags: [['landuse', 'grass']]
   },
   {
-    template: ['Noise from the machines', 'Fills up with noise', 'A building will rise', 'Digging and drilling', 'The construction site'],
+    template: ['Le bruit des machines', 'Casse les oreilles', 'Un bâtiment se dressera', 'Creuser et creuser', 'En construction'],
     tags: [['landuse', 'construction']]
   },
   {
-    template: ['I hear the train coming', 'From a passing train', 'On the rail track'],
+    template: ['J\'entends le train', 'Du train qui passe', 'Sur la voie de chemin de fer'],
     tags: [['landuse', 'railway']]
   },
   {
-    template: ['Two children', 'Chasing laughter', 'Children playing'],
+    template: ['Deux enfants', 'Rire d\'enfant', 'Les enfants jouent'],
     tags: [['landuse', 'recreation_ground']]
   },
   {
-    template: ['There is electricity in the air', 'A deep buzz'],
+    template: ['De l\'électricté dans l\'air', 'Bruit de tension'],
     tags: [['power', '*']]
   },
   {
-    template: ['There\'s no crossing that fence', 'The broken fence', 'Crossing the fence'],
+    template: ['Franchir la palissade', 'Trou dans la clôture', 'Ne pas franchir'],
     tags: [['barrier', 'fence']]
   },
   {
-    template: ['Learn your lesson','The teacher asks the kids', 'On the school wall', 'A student writing', 'By the school gate'],
+    template: ['Apprends ta leçon','Question aux élèves', 'Sur le mur de l\'école', 'Un élève écrit', 'Aux portes de l\'école'],
     tags: [['amenity', 'school']],
   },
   {
-    template: ['A car sleeping', 'Rearview mirrors', 'A stalled car', 'That old car', 'An abandoned car', 'Hunting for a parking spot', 'Leaves on the windshield', 'Shiny new cars'],
+    template: ['Une voiture dort', 'Le pare-brise', 'Une voiture à l\'arrêt', 'Cette vieille bagnole', 'Une voiture abandonnée', 'À la recherche d\'une place', 'Feuilles sur le pare-brise', 'Voitures rutilantes'],
     tags: [['amenity', 'parking']],
   },
   {
-    template: ['Bikes like metal skeletons', 'Locked wheels', 'Lots of bikes', 'That bike is missing a wheel'],
+    template: ['Vélos squelettes de métal', 'Antivol sur la roue', 'Une rangée de vélos0', 'Ce vélo n\'a plus de roues'],
     tags: [['amenity', 'bicycle_parking']],
   },
   {
-    template: ['On two wheels', 'Speeding on a bike'],
+    template: ['La petite Reine', 'Sur deux roues', 'À fond en vélo'],
     tags: [['cycleway:right', '*']],
   },
   {
-    template: ['Time for contemplation', 'God is here', 'Hear our prayer'],
+    template: ['Temps de recueillement', 'Dieu est ici', 'Entends notre prière'],
     tags: [['amenity', 'place_of_worship']],
   },
   {
-    template: ['Blue pill or red pill?', 'Watching you with the lab coat', 'Take your medication', 'The meds kick in', 'List of side effects', 'Aspirine please'],
+    template: ['Pilule rouge ou pilule bleue?', 'Petites boules roses', 'Blouse de pharmacien', 'Prends ton médicament', 'L\'effet du médicament', 'Effets secondaires:', 'Une boîte d\'aspirine'],
     tags: [['amenity', 'pharmacy']],
   },
   {
-    template: ['The hospital\'s cold corridors', 'Ambulances come and go', 'It\'s an emergency', 'A nurse smoking', 'A bubble in the syringe', 'Hospital room', 'A young nurse', 'Lifeline'],
+    template: ['Les couloirs froids de l\'hôpital', 'Va et vient d\'ambulances', 'C\'est une urgence', 'Infirmière pause cigarette', 'Bulle dans la seringue', 'Chambre d\'hôpital', 'Un jeune infirmier', 'Transfusion'],
     tags: [['amenity', 'hospital']]
   },
   {
-    template: ['Night shift starts'],
+    template: ['Le tour de nuit commence'],
     tags: [['amenity', 'hospital']],
     condition: (el, env) => env.moment === 'evening'
   },
   {
-    template: ['I put on my uniform', 'You\'re under arrest', 'Bad cops', 'Good cops', 'To serve and protect'],
+    template: ['Je mets mon uniforme', 'Vous êtes en état d\'arrestation', 'Bons flics', 'Mauvais flics', 'Servir et protéger'],
     tags: [['amenity', 'police']]
   },
   {
-    template: ['Will someone answer the phone?', 'Insert more coins'],
+    template: ['Quelqu\'un va t-il décrocher?', 'AAjoutez des pièces'],
     tags: [['amenity', 'telephone']],
   },
   {
-    template: ['A strong gasoline smell', 'Used to be plankton'],
+    template: ['Odeur d\'essence', 'C\'était du plancton'],
     tags: [['amenity', 'fuel']],
   },
   {
-    template: ['Overflowing bin', 'Going to waste', 'A bad smell', 'Flies and maggots'],
+    template: ['Une poubelle qui déborde', 'À la décharge', 'Mauvais éfluves', 'Mouches et asticots'],
     tags: [['amenity', 'waste_basket']],
   },
   {
-    template: ['Smells of chlorine', 'Running is forbidden', 'Water\'s warm once you\'re inside', 'Speedos and swimming glasses'],
+    template: ['Ça sent le chlore', 'On ne court pas sur les bords', 'Elle est bonne une fois dedans', 'Maillot de bain et lunettes'],
     tags: [['leisure', 'swimming_pool']],
   },
   {
-    template: ['Water under pressure', 'Water gushes out'],
+    template: ['Eau sous pression', 'De l\'eau qui coule'],
     tags: [['emergency', 'fire_hydrant']],
   },
   {
-    template: (el) => `What would ${el.name} think?`,
+    template: (el) => {
+      [
+        `Que penserait ${el.name}?`,
+        `${el.name} te regarde`
+      ][Math.floor(Math.random()*2)]
+    },
     tags: [['historic', 'memorial']],
     needsName: true
   },
   {
-    template: (el) => `${el.name} looks at you`,
-    tags: [['historic', 'memorial']],
-    needsName: true
-  },
-  {
-    template: 'A sculpture so elegant',
+    template: 'Une élégante sculpture',
     tags: [['artwork_type','sculpture']]
   },
   {
@@ -496,16 +496,15 @@ window.lines = [
   },
 
   {
-    template: (el, env) => `Meet at ${el.tags['addr:street']}, ${el.tags['addr:housenumber']}.`,
+    template: (el, env) => `RDV ${el.tags['addr:street']}, ${el.tags['addr:housenumber']}.`,
     condition: (el, env) => el.tags['addr:street'] !== undefined && el.tags['addr:housenumber'] !== undefined
   },
   {
     template: (el) =>
       [
-        `Meet me in ${el.tags['addr:street']}`,
-        `All along ${el.tags['addr:street']}`,
-        `Passing by ${el.tags['addr:street']}`,
-        `Walking in ${el.tags['addr:street']}`,
+        `Sur ${el.tags['addr:street']}`,
+        `Le long de ${el.tags['addr:street']}`,
+        `En passant ${el.tags['addr:street']}`,
       ][Math.floor(Math.random()*4)],
     condition: (el) => el.tags['addr:street'] !== undefined
   },
