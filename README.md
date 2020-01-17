@@ -25,3 +25,8 @@ TBD:
 - `sunny`
 - `rain`
 - `cloudy`
+
+
+# Credits
+
+Spanis translation by Onar Berrade / <a href="https://www.prodigiosovolcan.com/">Prodigioso Volcán</a>
