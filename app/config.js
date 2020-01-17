@@ -27,6 +27,9 @@ window.config = {
     },
     fr: {
       writing: 'Écriture du haiku...',
+    },
+    cs: {
+      writing: 'Píši haiku...',
     }
   },
   maxBounds: null
