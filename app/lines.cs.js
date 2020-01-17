@@ -29,6 +29,8 @@ const getMoment = (moment) => {
       return 'ráno'
     case 'afternoon':
       return 'odpoledne'
+    case 'evening':
+      return 'večer'
     case 'night':
       return 'noc'
   }
@@ -82,7 +84,7 @@ const getOrdinal = (n, number='si', person='ma', tense=1) => {
 }
 
 
-window.lines = [  
+window.lines = [
   {
     template: ['Svět je velký', 'Ztracen ve městě', 'Myšlenky na domov', 'Myslím na domov', 'Opouštím dům', 'Myšlenky na tebe', 'Blížím se', 'Velmi daleko']
   },
@@ -268,7 +270,7 @@ window.lines = [
   },
   {
     template: ['Vzpomínky na Istambul', 'Skvělý kebab'],
-    tags: [['cuisine', 'turkish'], ['cuisine', 'kebab']], 
+    tags: [['cuisine', 'turkish'], ['cuisine', 'kebab']],
   },
   {
     template: ['Osamělá bota','Ty boty jsou moc malé'],
@@ -346,10 +348,9 @@ window.lines = [
   {
     template: el => {
       const ele = Math.floor(Math.random() * parseInt(el.tags['building:levels']-1)+1)
-      
+
       const ord2 = getOrdinal(ele, 'si', 'i', 2)
       const ord4 = getOrdinal(ele, 'si', 'i', 4)
-      console.log(ele)
 
       const line = [
         `Vidím tě z ${ord2} poschodí`,
