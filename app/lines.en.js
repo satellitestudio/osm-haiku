@@ -32,10 +32,10 @@ const getOrdinal = (n) => {
 
 window.lines = [  
   {
-    template: ['The world is big', 'Lost in the city', 'The blurs of lifetimes', 'Thoughts of home', 'I think of home', 'Leaving home', 'Thinking of you', 'Getting closer', 'Far away', 'This lingering scent']
+    template: ['The world is big', 'Lost in the city', 'The blurs of lifetimes', 'Thoughts of home', 'I think of home', 'Leaving home', 'Thinking of you', 'Getting closer', 'Far away', 'This lingering scent', 'Here I am again']
   },
   {
-    template: ['The night is dark', 'Under the moonlight', 'A moonless night', 'The stars far away', 'Murmurs in her sleep', 'A night stroll', 'Sweet dreams'],
+    template: ['The night is dark', 'Under the moonlight', 'A moonless night', 'The stars far away', 'Murmurs in her sleep', 'A night stroll', 'Sweet dreams', 'Peeking at the moon'],
     condition: (el, env) => env.moment === 'night',
   },
   {
@@ -43,7 +43,7 @@ window.lines = [
     condition: (el, env) => env.moment === 'afternoon',
   },
   {
-    template: ['The day is young', 'The air still crisp', 'Good morning', 'Sad morning'],
+    template: ['The day is young', 'The air still crisp', 'Good morning', 'Sad morning', 'A world of dew'],
     condition: (el, env) => env.moment === 'morning',
   },
   {
@@ -59,23 +59,23 @@ window.lines = [
     needsName: true
   },
   {
-    template: ['Your reflection', 'Water like glass', 'Floating there', 'Quiet water', 'On the water\'s surface'],
+    template: ['Your reflection', 'Water like glass', 'Floating there', 'Quiet water', 'On the water\'s surface', 'The sound of water'],
     tags: [['waterway', 'canal'], ['waterway', 'river'], ['natural', 'water'], ['water', 'river']]
   },
   {
-    template: ['Frostbite', 'It\'s freezing', 'So cold'],
+    template: ['Frostbite', 'It\'s freezing', 'So cold', 'Shivering'],
     condition: (el, env) => env.temperature < 0,
   },
   {
-    template: ['Cold bites', 'Quite chilly'],
+    template: ['Cold remains', 'Quite chilly'],
     condition: (el, env) => env.temperature < 10,
   },
   {
-    template: ['Quite warm here'],
+    template: ['Quite warm here', 'Mild air'],
     condition: (el, env) => env.temperature > 20,
   },
   {
-    template: ['It is very hot.', 'A drop of sweat'],
+    template: ['It is very hot', 'A drop of sweat'],
     condition: (el, env) => env.temperature > 30,
   },
   {
@@ -83,7 +83,7 @@ window.lines = [
     condition: (el, env) => (env.weatherConditions.clear && env.moment !== 'night'),
   },
   {
-    template: ['Wet to the bone', 'Rain on the road like a mirror', 'Soaked pants', 'Pouring rain', 'Rain drops', 'A dark rain'],
+    template: ['Wet to the bone', 'Rain on the road like a mirror', 'Soaked pants', 'Pouring rain', 'Rain drops', 'A dark rain', 'The taste of rain'],
     condition: (el, env) => env.weatherConditions.rain || env.weatherConditions.drizzle,
   },
   {
