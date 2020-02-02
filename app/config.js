@@ -12,10 +12,11 @@ window.config = {
   overpass: {
     url: 'https://lz4.overpass-api.de/api/interpreter',
   },
-  center: { 
+  center: {
     en: {lat: 40.723619221714046, lng: -73.98190006613733 },
     es: {lat: 40.416894177003456, lng: -3.7034654617309566 },
     fr: {lat: 48.853318567427955, lng: 2.348955273628235 },
+    cs: {lat: 50.08112, lng: 14.42803 },
   },
   labels: {
     en: {
@@ -26,6 +27,9 @@ window.config = {
     },
     fr: {
       writing: 'Écriture du haiku...',
+    },
+    cs: {
+      writing: 'Píši haiku...',
     }
   },
   maxBounds: null
