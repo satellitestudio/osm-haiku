@@ -60,7 +60,8 @@ html, body {
 h1, .credits, .attribution {
     display: block;
     position: absolute;
-    left: 5rem;
+    margin: 0;
+    left: 3rem;
     font-size: 1.5rem;
     font-family: 'Open Sans', Helvetica, sans-serif;
     font-weight: 400;
@@ -81,11 +82,11 @@ h1 {
 }
 
 .attribution {
-    bottom: 5rem;
+    bottom: 3rem;
 }
 
 .credits {
-    bottom: 7rem;
+    bottom: 5rem;
 }
 
 .credits a, .credits a:hover, .attribution a, .attribution a:hover {
@@ -105,12 +106,34 @@ h1 {
 .poem {
     display: block;
     position: absolute;
-    top: 45%;
+    top: 50%;
     transform: translateY(-70%);
-    left: 5rem;
-    line-height: 5.5vw;
+    left: 3rem;
     pointer-events: none;
-    font-size: 4vw;
+    line-height: 4.5rem;
+    font-size: 3.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+    .poem {
+        left: 5rem;
+        line-height: 5.5rem;
+        font-size: 4rem;
+    }
+    h1, .credits, .attribution {
+        left: 5rem;
+    }
+    h1 {
+        top: 5rem;
+    }
+
+    .attribution {
+        bottom: 5rem;
+    }
+
+    .credits {
+        bottom: 7rem;
+    }
 }
 
 .credits {
