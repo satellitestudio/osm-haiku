@@ -220,7 +220,7 @@ window.lines = [
     tags: [['cuisine', 'turkish'], ['cuisine', 'kebab']], 
   },
   {
-    template: ['Une chaussure toute sule','Quelles belles bottes'],
+    template: ['Une chaussure toute seule','Quelles belles bottes'],
     tags: [['shop','shoes']]
   },
   {
@@ -229,7 +229,7 @@ window.lines = [
     condition: (el, env) => env.temperature > 20
   },
   {
-    template: ['Une audeur de gras', 'Frite trop molle', 'Trop de friture'],
+    template: ['Une odeur de gras', 'Frite trop molle', 'Trop de friture'],
     tags: [['amenity', 'fast_food']]
   },
   {
