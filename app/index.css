@@ -86,7 +86,7 @@ h1 {
 }
 
 .credits {
-    bottom: 5rem;
+    bottom: 6.5rem;
 }
 
 .credits a, .credits a:hover, .attribution a, .attribution a:hover {
@@ -145,18 +145,18 @@ h1 {
     text-decoration: none;
 }
 
-.credits {
+.credits, .attribution {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.credits li {
+.credits li, .attribution li {
     display: inline;
     margin: 0;
 }
 
-.credits li:not(:first-child)::before {
+.credits li:not(:first-child)::before, .attribution li:not(:first-child)::before {
     content: '※';
     margin-right: 5px;
 }
@@ -176,7 +176,7 @@ h1 {
 }
 
 
-h1:hover, .credits a:hover {
+h1:hover, .credits a:hover, .attribution a:hover {
     text-decoration: underline;
 }
 
