@@ -4,7 +4,7 @@ window.config = {
     token: '110661baee7df170d491985ec65b9684',
   },
   tiles: {
-    url: 'http://tile.stamen.com/toner/{z}/{x}/{y}.png',
+    url: 'https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
   },
   geocoder: {
     url: '//nominatim.openstreetmap.org/reverse',
