@@ -44,7 +44,7 @@ const getOverpassQL = (lat, lng, radius) => {
   is_in(${lat},${lng})->.a;
   relation(pivot.a);
   out tags ${center};`
-  console.log('Generated Overpass QL:', ql)
+  // console.log('Generated Overpass QL:', ql)
   return encodeURIComponent(ql)
 }
 
@@ -76,7 +76,7 @@ const getEnvironment = (weather) => {
   if (timeHour >= 6 && timeHour < 12) moment = 'morning'
   if (timeHour >= 12 && timeHour < 19) moment = 'afternoon'
   if (timeHour >= 19) moment = 'evening'
-  console.log(weather)
+  // console.log(weather)
   const weatherConditions = {}
   weatherConditions.thunderstorm = weather.weather.find(w => w.id >= 200 && w.id < 300) !== undefined
   weatherConditions.drizzle      = weather.weather.find(w => w.id >= 300 && w.id < 400) !== undefined
@@ -95,7 +95,7 @@ const getEnvironment = (weather) => {
 }
 
 const lineMatching = (element, line, environment) => {
-  // allow all 
+  // allow all
   const tags = line.tags === undefined ? [['*', '*']] : line.tags
 
   for (let i = 0; i < tags.length; i++) {
@@ -126,7 +126,7 @@ const writePoem = () => {
   const lineMatches = []
 
   // all features
-  console.log('using ', numFeatures, ' features and ', lines.length, ' lines')
+  // console.log('using ', numFeatures, ' features and ', lines.length, ' lines')
   for (let i = 0; i <= numFeatures - 1; i++) {
     const feature = featuresCopy[i]
     // take all existing lines
@@ -142,7 +142,7 @@ const writePoem = () => {
     })
   }
 
-  console.log(lineMatches)
+  // console.log(lineMatches)
 
   // deduplicate line matches (by line index)
   const uniqLineMatches = []
@@ -160,7 +160,7 @@ const writePoem = () => {
       uniqLineMatchesIndexes.push(l.lineIndex)
     }
   })
-  console.log(uniqLineMatchesIndexes, uniqLineMatches)
+  // console.log(uniqLineMatchesIndexes, uniqLineMatches)
 
   // no prioritizing: result will only depend on lines files:
   // - if there are more env rules, better chance to have env lines
@@ -189,13 +189,13 @@ const writePoem = () => {
     template = (typeof template === 'function')
       ? template(uniqLineMatches[randomIndex].feature, environment)
       : template
-    
+
     finalLines.push(template)
     if (removeLine === true) {
       uniqLineMatches.splice(randomIndex, 1)
     }
   }
-  
+
   document.querySelector('.js-poem').innerHTML = finalLines
     .join('<br>')
 }
@@ -204,7 +204,7 @@ let elements
 let environment
 
 const load = () => {
-  
+
   const toggleLoadingState = (loading) => {
     document.querySelector('.js-poem-container').classList.toggle('-disabled', loading)
     document.querySelector('.js-credits').classList.toggle('-hidden', loading)
@@ -235,18 +235,18 @@ const load = () => {
     (jsons) => {
       const rawElements = jsons[0].elements.filter((e) => e.tags !== undefined)
       const weather = jsons[1]
-      console.log(weather)
+      // console.log(weather)
       elements = getElements(rawElements)
 
-      const featuresDebug = elements.map(feature => {
-        return Object.keys(feature.tags).map(tag => {
-          return `${tag},${feature.tags[tag]}`
-        })
-      })
-      console.log('all usable features:')
-      console.log(featuresDebug)
+      // const featuresDebug = elements.map(feature => {
+      //   return Object.keys(feature.tags).map(tag => {
+      //     return `${tag},${feature.tags[tag]}`
+      //   })
+      // })
+      // console.log('all usable features:')
+      // console.log(featuresDebug)
       environment = getEnvironment(weather)
-      console.log('env', environment)
+      // console.log('env', environment)
 
 
       if (rawElements.length < CONFIG.minRawElements) {
@@ -295,14 +295,14 @@ const intro = () => {
     map.on('movestart', () => {
       document.querySelector('.js-poem-container').classList.toggle('-hidden', true)
     })
-    
+
     map.on('moveend', () => {
       startLoadTimeout = setTimeout(() => {
         document.querySelector('.js-poem-container').classList.toggle('-hidden', false)
         setCenter()
       }, 800)
     })
-    
+
     map.on('move', () => {
       clearTimeout(startLoadTimeout)
     })
@@ -312,19 +312,19 @@ const intro = () => {
     center = map.getCenter()
     load()
   }, 1000)
-  
+
 }
 
 
 if (window.L) {
   map = L.map('map', mapConfig)
   map.setView(center, 15)
-  
-  var hash = new L.Hash(map)
-  
-  L.tileLayer(
-    `${window.config.tiles.url}?access_token=${window.config.tiles.token}`
-  ).addTo(map)
+
+  new L.Hash(map)
+
+  var token = window.config.tiles.token
+  var tilesUrl = `${window.config.tiles.url}${token ? `?access_token=${token}` : ''}`
+  L.tileLayer(tilesUrl).addTo(map)
 
   intro()
 }

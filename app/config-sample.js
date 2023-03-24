@@ -16,7 +16,7 @@ window.config = {
     token: 'pk...',
   },
   overpass: {
-    url: 'https://lz4.overpass-api.de/api/interpreter',
+    url: 'https://overpass-api.de/api/interpreter',
   },
   center: { lat: 40.723619221714046, lng: -73.98190006613733 },
   maxBounds: null
