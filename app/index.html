@@ -37,6 +37,7 @@
         <li><a href="//satellitestud.io">by Satellite Studio</a></li>
         <li>Language: 
           <a href="//satellitestud.io/osm-haiku/app/?lg=en">en</a>
+          / <a href="//satellitestud.io/osm-haiku/app/?lg=de" title="Translation by Markus Peloso with ChatGPT">de</a>
           / <a href="//satellitestud.io/osm-haiku/app/?lg=es" title="Translation by Onar Berrade/Prodigioso Volcán">es</a>
           / <a href="//satellitestud.io/osm-haiku/app/?lg=fr">fr</a>
           / <a href="//satellitestud.io/osm-haiku/app/?lg=cs">cs</a>
@@ -50,13 +51,12 @@
       </div>
     </div>
     <ul class="attribution">
-      <li>Map tiles by <a href="https://stamen.com/">Stamen Design</a></li>
         <li>Data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</li>
     </ul>
     <script src="./config.js"></script>
 
     <script>
-      window.supportedLanguages = ['en', 'es', 'fr', 'cs']
+      window.supportedLanguages = ['en', 'de', 'es', 'fr', 'cs']
       let userLg = 'en'
       for (let i = 0; i < navigator.languages.length; i++) {
         let navLg = navigator.languages[i].substr(0,2)
