@@ -14,6 +14,10 @@ html, body {
     overflow: hidden;
 }
 
+ html {
+    filter: invert(100%) hue-rotate(180deg) grayscale(100%); 
+}
+
 * {
     box-sizing: border-box;
 }
@@ -95,7 +99,7 @@ h1 {
 
 .overlay {
     background-color: white;
-    opacity: .85;
+    opacity: .20;
     position: absolute;
     width: 100vw;
     height: 100vh;
